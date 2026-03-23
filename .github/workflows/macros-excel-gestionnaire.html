@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macros Excel — Guide du Gestionnaire</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0D0F14; --surface:#14171F; --surface2:#1C2030; --surface3:#222639;
+  --border:rgba(255,255,255,0.07); --border-hover:rgba(255,255,255,0.15);
+  --text:#E8EAF0; --text-muted:#7A8099; --text-dim:#4A5068;
+  --accent:#4F7FFF; --accent-bg:rgba(79,127,255,0.12);
+  --c1:#4F7FFF; --c1-bg:rgba(79,127,255,0.1); --c1-border:rgba(79,127,255,0.25);
+  --c2:#34C98E; --c2-bg:rgba(52,201,142,0.1); --c2-border:rgba(52,201,142,0.25);
+  --c3:#F5A623; --c3-bg:rgba(245,166,35,0.1); --c3-border:rgba(245,166,35,0.25);
+  --c4:#A78BFA; --c4-bg:rgba(167,139,250,0.1); --c4-border:rgba(167,139,250,0.25);
+  --c5:#2DD4BF; --c5-bg:rgba(45,212,191,0.1); --c5-border:rgba(45,212,191,0.25);
+  --c6:#F87171; --c6-bg:rgba(248,113,113,0.1); --c6-border:rgba(248,113,113,0.25);
+  --c7:#FB923C; --c7-bg:rgba(251,146,60,0.1); --c7-border:rgba(251,146,60,0.25);
+  --red:#F87171; --red-bg:rgba(248,113,113,0.1); --red-border:rgba(248,113,113,0.25);
+  --green:#34C98E; --green-bg:rgba(52,201,142,0.1);
+  --yellow:#F5A623; --yellow-bg:rgba(245,166,35,0.1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 100%)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+nav{position:sticky;top:0;z-index:100;background:rgba(13,15,20,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:10px 0}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nav-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:var(--text);margin-right:10px}
+.nav-link{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--text-muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;transition:all .2s}
+.nav-link:hover{background:var(--surface2);color:var(--text)}
+header{padding:80px 0 56px;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--c1-bg);border:1px solid var(--c1-border);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:500;color:var(--c1);letter-spacing:.04em;text-transform:uppercase;margin-bottom:28px;animation:fadeUp .6s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--c1);border-radius:50%;animation:pulse 2s infinite}
+h1{font-family:'Syne',sans-serif;font-size:clamp(34px,6vw,68px);font-weight:800;line-height:1.05;letter-spacing:-.03em;animation:fadeUp .7s .1s ease both}
+h1 span{background:linear-gradient(135deg,var(--c1) 0%,var(--c5) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{margin:20px auto 0;font-size:17px;color:var(--text-muted);font-weight:300;max-width:540px;animation:fadeUp .7s .2s ease both}
+.hero-stats{display:flex;justify-content:center;gap:40px;margin-top:44px;animation:fadeUp .7s .3s ease both}
+.stat{text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--text);line-height:1}
+.stat-label{font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:.06em;text-transform:uppercase}
+.search-wrap{max-width:460px;margin:44px auto 0;position:relative;animation:fadeUp .7s .35s ease both}
+.search-wrap input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 44px 13px 18px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);outline:none;transition:border-color .2s,box-shadow .2s}
+.search-wrap input::placeholder{color:var(--text-dim)}
+.search-wrap input:focus{border-color:var(--c1-border);box-shadow:0 0 0 3px var(--c1-bg)}
+.search-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:16px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:26px 0 48px;animation:fadeUp .7s .4s ease both}
+.filter-btn{padding:6px 14px;border-radius:99px;border:1px solid var(--border);background:transparent;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--border-hover);color:var(--text)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.section-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* GUIDE */
+.guide-section{margin-bottom:56px;animation:fadeUp .5s ease both}
+.guide-tabs{display:flex;gap:2px;border-bottom:1px solid var(--border)}
+.gtab{padding:12px 20px;font-size:14px;color:var(--text-muted);cursor:pointer;border:none;background:none;font-family:'DM Sans',sans-serif;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s}
+.gtab:hover{color:var(--text)}
+.gtab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.gtab-panel{display:none;background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;padding:30px}
+.gtab-panel.active{display:block}
+.step-list{display:flex;flex-direction:column;gap:14px}
+.step-item{display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.step-num{width:40px;height:40px;border-radius:10px;background:var(--c1-bg);border:1px solid var(--c1-border);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--c1);flex-shrink:0}
+.step-content h4{font-size:14px;font-weight:500;color:var(--text);margin-bottom:3px}
+.step-content p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.kbd{display:inline-block;background:var(--surface2);border:1px solid var(--border-hover);border-radius:5px;padding:1px 7px;font-size:12px;color:var(--text);font-family:monospace}
+.param-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.param-grid{grid-template-columns:1fr}}
+.param-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px}
+.param-card h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:7px}
+.param-card p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.err-list{display:flex;flex-direction:column;gap:10px}
+.err-item{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.err-icon{width:36px;height:36px;border-radius:8px;background:var(--red-bg);border:1px solid var(--red-border);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.err-icon.warn{background:var(--yellow-bg);border-color:rgba(245,166,35,0.3)}
+.err-icon.ok{background:var(--green-bg);border-color:rgba(52,201,142,0.3)}
+.err-content h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:3px}
+.err-content p{font-size:13px;color:var(--text-muted);line-height:1.65}
+.err-content .fix{font-size:12px;color:var(--green);margin-top:5px}
+.err-content .fix::before{content:'✓ ';font-weight:700}
+
+/* CARDS */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;position:relative;overflow:hidden;animation:fadeUp .5s ease both;transition:border-color .2s,transform .2s,background .2s}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-color,var(--accent));opacity:0;transition:opacity .2s}
+.card:hover{border-color:var(--border-hover);transform:translateY(-3px);background:var(--surface2)}
+.card:hover::before{opacity:1}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px}
+.card-icon{width:38px;height:38px;border-radius:10px;background:var(--card-bg,var(--c1-bg));border:1px solid var(--card-border,var(--c1-border));display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.card-tag{font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;background:var(--card-bg,var(--c1-bg));color:var(--card-color,var(--c1));border:1px solid var(--card-border,var(--c1-border));letter-spacing:.04em}
+.card h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:3px}
+.card-desc{font-size:13px;color:var(--text-muted);margin-bottom:14px;font-weight:300}
+.card ul{list-style:none}
+.card ul li{font-size:13px;color:var(--text-muted);padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:8px;cursor:pointer;transition:color .15s}
+.card ul li:last-child{border-bottom:none}
+.card ul li:hover{color:var(--card-color,var(--accent))}
+.card ul li::before{content:'→';color:var(--card-color,var(--accent));font-size:11px;flex-shrink:0}
+.card-count{font-size:11px;color:var(--text-dim);margin-top:12px}
+.tips-banner{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px 28px;margin:44px 0 20px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.tips-icon{font-size:28px}
+.tips-banner h4{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px;color:var(--text)}
+.tips-banner p{font-size:13px;color:var(--text-muted);font-weight:300;line-height:1.7}
+.tips-banner strong{color:var(--c1);font-weight:500}
+.no-results{text-align:center;padding:60px 20px;color:var(--text-dim);display:none}
+footer{margin-top:72px;padding:36px 0;border-top:1px solid var(--border);text-align:center}
+footer p{font-size:13px;color:var(--text-dim)}
+footer strong{color:var(--accent);font-weight:500}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border-hover);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow-y:auto;animation:modalIn .25s ease}
+.modal-header{padding:22px 26px 0;display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.modal-header h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--text);line-height:1.3}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.modal-close:hover{background:var(--surface3);color:var(--text)}
+.modal-body{padding:18px 26px 26px}
+.modal-desc{font-size:14px;color:var(--text-muted);margin-bottom:18px;line-height:1.7}
+.modal-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.code-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px;overflow-x:auto;position:relative}
+.code-block pre{font-family:'Courier New',monospace;font-size:12.5px;line-height:1.8;color:#C5C8D4;margin:0;white-space:pre}
+.copy-btn{position:absolute;top:10px;right:10px;background:var(--surface2);border:1px solid var(--border-hover);border-radius:6px;padding:4px 11px;font-size:12px;color:var(--text-muted);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.copy-btn:hover{background:var(--surface3);color:var(--text)}
+.copy-btn.copied{background:var(--green-bg);border-color:rgba(52,201,142,.3);color:var(--green)}
+.modal-tip{background:var(--c1-bg);border:1px solid var(--c1-border);border-radius:10px;padding:13px 15px;margin-top:14px;font-size:13px;color:var(--text-muted);line-height:1.65}
+.modal-tip strong{color:var(--c1);font-weight:500}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes modalIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:99px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <span class="nav-brand">📗 Macros Excel</span>
+    <button class="nav-link" onclick="scrollSec('guide')">📥 Guide démarrage</button>
+    <button class="nav-link" onclick="scrollSec('metier')">💼 Cas métier</button>
+    <button class="nav-link" onclick="scrollSec('transversal')">🔀 Transversal</button>
+  </div>
+</nav>
+
+<div class="wrap">
+<header>
+  <div class="hero-badge">Guide complet</div>
+  <h1>Macros Excel<br><span>pour le Gestionnaire</span></h1>
+  <p class="hero-sub">De l'installation à la mise en production — 55 exemples VBA prêts à l'emploi</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Guides pratiques</div></div>
+    <div class="stat"><div class="stat-num">11</div><div class="stat-label">Domaines métier</div></div>
+    <div class="stat"><div class="stat-num">55</div><div class="stat-label">Exemples VBA</div></div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Rechercher un cas d'usage…" oninput="filterCards()">
+    <span class="search-icon">⌕</span>
+  </div>
+</header>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="setFilter('all',this)">Tous</button>
+  <button class="filter-btn" onclick="setFilter('reporting',this)">Reporting</button>
+  <button class="filter-btn" onclick="setFilter('data',this)">Data</button>
+  <button class="filter-btn" onclick="setFilter('finance',this)">Finance</button>
+  <button class="filter-btn" onclick="setFilter('rh',this)">RH</button>
+  <button class="filter-btn" onclick="setFilter('projet',this)">Projet</button>
+  <button class="filter-btn" onclick="setFilter('ventes',this)">Ventes</button>
+  <button class="filter-btn" onclick="setFilter('transversal',this)">Transversal</button>
+</div>
+
+<!-- GUIDE -->
+<div id="guide"></div>
+<div class="section-label" style="margin-bottom:0">Guide de démarrage</div>
+<div class="guide-section">
+  <div class="guide-tabs">
+    <button class="gtab active" onclick="switchTab(0)">📥 Insérer une macro</button>
+    <button class="gtab" onclick="switchTab(1)">⚙️ Paramétrer Excel</button>
+    <button class="gtab" onclick="switchTab(2)">⚠️ Erreurs à éviter</button>
+  </div>
+
+  <div class="gtab-panel active">
+    <div class="step-list">
+      <div class="step-item"><div class="step-num">1</div><div class="step-content"><h4>Ouvrir l'éditeur VBA</h4><p>Appuyez sur <span class="kbd">Alt</span> + <span class="kbd">F11</span> dans Excel. L'éditeur Visual Basic s'ouvre dans une nouvelle fenêtre.</p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-content"><h4>Créer un module</h4><p>Dans le menu de l'éditeur, cliquez sur <strong>Insertion → Module</strong>. Un module vide apparaît dans l'explorateur de projet à gauche.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-content"><h4>Coller le code VBA</h4><p>Cliquez dans la zone blanche du module, puis collez le code. Chaque macro commence par <span class="kbd">Sub NomMacro()</span> et se termine par <span class="kbd">End Sub</span>.</p></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-content"><h4>Tester la macro</h4><p>Placez votre curseur à l'intérieur du code, puis appuyez sur <span class="kbd">F5</span> pour l'exécuter. Utilisez <span class="kbd">F8</span> pour exécuter ligne par ligne (débogage).</p></div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-content"><h4>Enregistrer en .xlsm</h4><p>Pour conserver les macros, sauvegardez en <strong>.xlsm</strong> (Classeur Excel avec macros). Le format .xlsx supprime silencieusement tout le code VBA.</p></div></div>
+      <div class="step-item"><div class="step-num">6</div><div class="step-content"><h4>Associer à un bouton</h4><p>Onglet <strong>Développeur → Insérer → Bouton (contrôle de formulaire)</strong>. Dessinez le bouton sur la feuille, puis associez-le à votre macro dans la boîte de dialogue.</p></div></div>
+    </div>
+  </div>
+
+  <div class="gtab-panel">
+    <div class="param-grid">
+      <div class="param-card"><h4>🔧 Activer l'onglet Développeur</h4><p>Fichier → Options → Personnaliser le ruban → cocher <strong>Développeur</strong>. Donne accès à l'éditeur VBA, aux macros et aux contrôles de formulaire.</p></div>
+      <div class="param-card"><h4>🔐 Niveau de sécurité des macros</h4><p>Développeur → Sécurité des macros → <strong>"Désactiver toutes les macros avec notification"</strong>. Excel demandera confirmation à chaque ouverture d'un fichier avec macros.</p></div>
+      <div class="param-card"><h4>📂 Emplacement approuvé</h4><p>Fichier → Options → Centre de gestion de la confidentialité → Emplacements approuvés. Les fichiers de ce dossier s'ouvrent avec les macros activées automatiquement.</p></div>
+      <div class="param-card"><h4>📚 Références VBA nécessaires</h4><p>Dans l'éditeur VBA : Outils → Références. Pour Outlook, cochez <strong>Microsoft Outlook Object Library</strong>. Pour Word, cochez <strong>Microsoft Word Object Library</strong>.</p></div>
+      <div class="param-card"><h4>💾 Classeur de macros personnelles</h4><p>Lors de l'enregistrement d'une macro, choisir <strong>"Classeur de macros personnelles"</strong> pour que la macro soit disponible dans tous vos fichiers Excel.</p></div>
+      <div class="param-card"><h4>🔁 Activation au démarrage</h4><p>Pour les fichiers internes de confiance, l'option <strong>"Activer toutes les macros"</strong> peut être utilisée. Évitez-la pour des fichiers reçus par e-mail ou de sources externes.</p></div>
+    </div>
+  </div>
+
+  <div class="gtab-panel">
+    <div class="err-list">
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Oublier de sauvegarder en .xlsm</h4><p>Si vous sauvegardez en .xlsx, tout votre code VBA est silencieusement supprimé. Excel vous prévient mais beaucoup cliquent "Oui" sans lire le message.</p><div class="fix">Toujours choisir "Classeur Excel prenant en charge les macros (*.xlsm)" lors de l'enregistrement.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Ne pas gérer les erreurs avec On Error</h4><p>Une macro sans gestion d'erreur plante brutalement dès qu'une cellule est vide, un fichier absent ou un format inattendu — laissant parfois les données dans un état intermédiaire.</p><div class="fix">Ajouter <code>On Error GoTo GestionErreur</code> en début de macro et un bloc de traitement à la fin.</div></div></div>
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Utiliser Select et Activate inutilement</h4><p>Les macros enregistrées utilisent <code>.Select</code> partout. C'est lent, fragile et ça plante si une autre feuille est active. Source d'erreur n°1 des débutants.</p><div class="fix">Référencer directement : <code>Sheets("Data").Range("A1").Value = 10</code> sans passer par Select.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Coder en dur les noms de feuilles et plages</h4><p>Si vous écrivez <code>Sheets("Rapport Janvier")</code> et que l'onglet est renommé, la macro plante. Idem pour des plages fixes quand les données grandissent.</p><div class="fix">Utiliser des variables pour les noms et <code>Cells(Rows.Count,"A").End(xlUp).Row</code> pour les plages dynamiques.</div></div></div>
+      <div class="err-item"><div class="err-icon">⛔</div><div class="err-content"><h4>Ne pas désactiver le rafraîchissement écran</h4><p>Sans <code>Application.ScreenUpdating = False</code>, chaque action rafraîchit l'affichage. Une macro traitant 1 000 lignes peut prendre 60 s au lieu de 2 s.</p><div class="fix">Ajouter <code>Application.ScreenUpdating = False</code> au début et <code>= True</code> à la fin.</div></div></div>
+      <div class="err-item"><div class="err-icon warn">⚠️</div><div class="err-content"><h4>Pas d'annulation possible (pas d'Undo)</h4><p>Les macros VBA vident la pile d'annulation d'Excel. Une fois exécutée, Ctrl+Z ne permet pas de revenir en arrière.</p><div class="fix">Créer une copie de sauvegarde avant d'exécuter une macro destructive, ou demander confirmation avec MsgBox.</div></div></div>
+      <div class="err-item"><div class="err-icon ok">ℹ️</div><div class="err-content"><h4>Oublier Option Explicit</h4><p>Sans <code>Option Explicit</code>, une faute de frappe dans un nom de variable crée silencieusement une nouvelle variable vide. Le bug est quasi-invisible.</p><div class="fix">Ajouter <code>Option Explicit</code> en première ligne de chaque module pour forcer la déclaration des variables.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- MÉTIER -->
+<div id="metier"></div>
+<div class="section-label">Domaines métier</div>
+<div class="grid" id="cardsGrid">
+
+  <div class="card" data-cat="reporting" style="--card-color:#4F7FFF;--card-bg:rgba(79,127,255,0.1);--card-border:rgba(79,127,255,0.25)">
+    <div class="card-top"><div class="card-icon">📊</div><span class="card-tag">Reporting</span></div>
+    <h3>Rapports & tableaux de bord</h3>
+    <p class="card-desc">Automatisation complète de la production et diffusion des rapports</p>
+    <ul>
+      <li onclick="openModal('rpt1')">Générer un rapport mensuel depuis des données brutes</li>
+      <li onclick="openModal('rpt2')">Actualiser tous les tableaux croisés dynamiques en un clic</li>
+      <li onclick="openModal('rpt3')">Consolider plusieurs feuilles en un tableau de synthèse</li>
+      <li onclick="openModal('rpt4')">Exporter un onglet en PDF avec mise en page prête à imprimer</li>
+      <li onclick="openModal('rpt5')">Envoyer le rapport par e-mail dès sa génération (Outlook)</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="data" style="--card-color:#34C98E;--card-bg:rgba(52,201,142,0.1);--card-border:rgba(52,201,142,0.25)">
+    <div class="card-top"><div class="card-icon">🗂️</div><span class="card-tag">Data</span></div>
+    <h3>Nettoyage & gestion des données</h3>
+    <p class="card-desc">Fiabilisation et standardisation des données reçues</p>
+    <ul>
+      <li onclick="openModal('dat1')">Supprimer les doublons et lignes vides automatiquement</li>
+      <li onclick="openModal('dat2')">Standardiser les formats (dates, téléphones, majuscules)</li>
+      <li onclick="openModal('dat3')">Importer et fusionner des fichiers CSV depuis un dossier</li>
+      <li onclick="openModal('dat4')">Remplacer des valeurs en masse selon des règles métier</li>
+      <li onclick="openModal('dat5')">Détecter et surligner les anomalies ou valeurs hors plage</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="finance" style="--card-color:#F5A623;--card-bg:rgba(245,166,35,0.1);--card-border:rgba(245,166,35,0.25)">
+    <div class="card-top"><div class="card-icon">💰</div><span class="card-tag">Finance</span></div>
+    <h3>Budget & suivi financier</h3>
+    <p class="card-desc">Pilotage budgétaire et analyses financières automatisées</p>
+    <ul>
+      <li onclick="openModal('fin1')">Comparer le réalisé vs le budget ligne par ligne</li>
+      <li onclick="openModal('fin2')">Calculer les écarts et projections de fin d'année</li>
+      <li onclick="openModal('fin3')">Ventiler les charges par centre de coût automatiquement</li>
+      <li onclick="openModal('fin4')">Mettre à jour les taux de change depuis une source externe</li>
+      <li onclick="openModal('fin5')">Générer un graphique d'évolution mensuelle des dépenses</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="rh" style="--card-color:#A78BFA;--card-bg:rgba(167,139,250,0.1);--card-border:rgba(167,139,250,0.25)">
+    <div class="card-top"><div class="card-icon">👥</div><span class="card-tag">RH</span></div>
+    <h3>Ressources humaines</h3>
+    <p class="card-desc">Automatisation des tâches RH répétitives et suivis collaborateurs</p>
+    <ul>
+      <li onclick="openModal('rh1')">Calculer les congés, RTT et soldes par collaborateur</li>
+      <li onclick="openModal('rh2')">Générer les plannings de présence hebdomadaires</li>
+      <li onclick="openModal('rh3')">Créer un récapitulatif de paie ou d'heures supplémentaires</li>
+      <li onclick="openModal('rh4')">Envoyer un e-mail personnalisé à chaque salarié (publipostage)</li>
+      <li onclick="openModal('rh5')">Suivre les formations et habilitations à renouveler</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="projet" style="--card-color:#2DD4BF;--card-bg:rgba(45,212,191,0.1);--card-border:rgba(45,212,191,0.25)">
+    <div class="card-top"><div class="card-icon">📅</div><span class="card-tag">Projet</span></div>
+    <h3>Gestion de projet & planification</h3>
+    <p class="card-desc">Suivi de l'avancement et alertes sur les jalons critiques</p>
+    <ul>
+      <li onclick="openModal('prj1')">Mettre à jour l'avancement d'un diagramme de Gantt</li>
+      <li onclick="openModal('prj2')">Calculer les délais et alerter sur les jalons dépassés</li>
+      <li onclick="openModal('prj3')">Consolider les statuts de plusieurs projets en synthèse</li>
+      <li onclick="openModal('prj4')">Générer un tableau de bord de suivi des risques</li>
+      <li onclick="openModal('prj5')">Archiver automatiquement les projets clôturés</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="ventes" style="--card-color:#F87171;--card-bg:rgba(248,113,113,0.1);--card-border:rgba(248,113,113,0.25)">
+    <div class="card-top"><div class="card-icon">🛒</div><span class="card-tag">Ventes</span></div>
+    <h3>Commercial & stocks</h3>
+    <p class="card-desc">Automatisation des processus commerciaux et logistiques</p>
+    <ul>
+      <li onclick="openModal('vnt1')">Générer des devis ou bons de commande depuis un modèle</li>
+      <li onclick="openModal('vnt2')">Mettre à jour les stocks après chaque saisie de mouvement</li>
+      <li onclick="openModal('vnt3')">Identifier les produits sous le seuil de réapprovisionnement</li>
+      <li onclick="openModal('vnt4')">Calculer les commissions par commercial sur la période</li>
+      <li onclick="openModal('vnt5')">Créer des fiches clients à partir d'une liste de contacts</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+</div>
+
+<!-- TRANSVERSAL -->
+<div id="transversal"></div>
+<div class="section-label" style="margin-top:44px">Cas transversaux</div>
+<div class="grid">
+
+  <div class="card" data-cat="transversal" style="--card-color:#FB923C;--card-bg:rgba(251,146,60,0.1);--card-border:rgba(251,146,60,0.25)">
+    <div class="card-top"><div class="card-icon">🖱️</div><span class="card-tag">Transversal</span></div>
+    <h3>Interface utilisateur & ergonomie</h3>
+    <p class="card-desc">Rendre Excel plus accessible et agréable pour tous les utilisateurs</p>
+    <ul>
+      <li onclick="openModal('ui1')">Créer des boutons personnalisés dans le ruban ou sur la feuille</li>
+      <li onclick="openModal('ui2')">Concevoir des formulaires de saisie guidés (UserForm)</li>
+      <li onclick="openModal('ui3')">Ajouter des listes déroulantes dynamiques liées à des données</li>
+      <li onclick="openModal('ui4')">Définir des raccourcis clavier pour lancer des macros rapidement</li>
+      <li onclick="openModal('ui5')">Afficher des messages d'alerte ou de confirmation contextuels</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#4F7FFF;--card-bg:rgba(79,127,255,0.1);--card-border:rgba(79,127,255,0.25)">
+    <div class="card-top"><div class="card-icon">📁</div><span class="card-tag">Transversal</span></div>
+    <h3>Gestion multi-fichiers</h3>
+    <p class="card-desc">Travailler simultanément sur plusieurs classeurs et fichiers</p>
+    <ul>
+      <li onclick="openModal('mf1')">Ouvrir, lire et fermer automatiquement d'autres classeurs Excel</li>
+      <li onclick="openModal('mf2')">Consolider des rapports reçus de plusieurs équipes ou sites</li>
+      <li onclick="openModal('mf3')">Importer des données depuis des fichiers CSV en masse</li>
+      <li onclick="openModal('mf4')">Renommer ou déplacer des fichiers depuis Excel via VBA</li>
+      <li onclick="openModal('mf5')">Créer un fichier de synthèse à partir de dizaines de fichiers source</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#34C98E;--card-bg:rgba(52,201,142,0.1);--card-border:rgba(52,201,142,0.25)">
+    <div class="card-top"><div class="card-icon">🎨</div><span class="card-tag">Transversal</span></div>
+    <h3>Mise en forme conditionnelle avancée</h3>
+    <p class="card-desc">Visualisation dynamique au-delà des règles standard d'Excel</p>
+    <ul>
+      <li onclick="openModal('mef1')">Appliquer des couleurs selon des règles métier complexes</li>
+      <li onclick="openModal('mef2')">Surligner automatiquement les lignes d'un tableau selon un statut</li>
+      <li onclick="openModal('mef3')">Créer des jauges et indicateurs visuels RAG (Rouge/Orange/Vert)</li>
+      <li onclick="openModal('mef4')">Générer des barres de progression dans les cellules</li>
+      <li onclick="openModal('mef5')">Formater un rapport complet selon une charte graphique définie</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#A78BFA;--card-bg:rgba(167,139,250,0.1);--card-border:rgba(167,139,250,0.25)">
+    <div class="card-top"><div class="card-icon">🔗</div><span class="card-tag">Transversal</span></div>
+    <h3>Interopérabilité Office</h3>
+    <p class="card-desc">Connecter Excel à Word, PowerPoint, Outlook et Teams</p>
+    <ul>
+      <li onclick="openModal('off1')">Générer un document Word (compte-rendu, fiche) depuis Excel</li>
+      <li onclick="openModal('off2')">Alimenter une présentation PowerPoint avec des graphiques à jour</li>
+      <li onclick="openModal('off3')">Créer des rendez-vous ou rappels Outlook depuis un planning Excel</li>
+      <li onclick="openModal('off4')">Envoyer des e-mails personnalisés avec pièces jointes</li>
+      <li onclick="openModal('off5')">Poster un message dans Teams lorsqu'un seuil est atteint</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+  <div class="card" data-cat="transversal" style="--card-color:#F87171;--card-bg:rgba(248,113,113,0.1);--card-border:rgba(248,113,113,0.25)">
+    <div class="card-top"><div class="card-icon">🔒</div><span class="card-tag">Transversal</span></div>
+    <h3>Sécurité & gouvernance</h3>
+    <p class="card-desc">Protéger les données et tracer les modifications sensibles</p>
+    <ul>
+      <li onclick="openModal('sec1')">Protéger / déprotéger des feuilles par mot de passe automatiquement</li>
+      <li onclick="openModal('sec2')">Masquer certains onglets selon le profil ou rôle de l'utilisateur</li>
+      <li onclick="openModal('sec3')">Journaliser les modifications avec horodatage et nom de l'auteur</li>
+      <li onclick="openModal('sec4')">Verrouiller les cellules de formule pour éviter les suppressions</li>
+      <li onclick="openModal('sec5')">Générer une sauvegarde horodatée à chaque ouverture du fichier</li>
+    </ul>
+    <div class="card-count">📎 Cliquez sur un cas pour voir l'exemple VBA</div>
+  </div>
+
+</div>
+
+<div class="tips-banner">
+  <div class="tips-icon">💡</div>
+  <div>
+    <h4>Conseil de pro</h4>
+    <p>Commencez par <strong>enregistrer une macro</strong> (Développeur → Enregistrer une macro) pour voir le code généré automatiquement. C'est le meilleur moyen d'apprendre VBA. Appuyez sur <strong>F8</strong> dans l'éditeur pour exécuter le code pas à pas et comprendre chaque étape.</p>
+  </div>
+</div>
+
+<div class="no-results" id="noResults">
+  <div style="font-size:40px;margin-bottom:12px">🔍</div>
+  <p>Aucun résultat pour cette recherche.</p>
+</div>
+
+<footer>
+  <p>Guide des macros Excel — <strong>55 exemples VBA</strong> pour gestionnaires · Cliquez sur n'importe quel cas d'usage pour voir le code</p>
+</footer>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeOut(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <h3 id="modalTitle"></h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-label">Exemple de macro VBA</div>
+      <div class="code-block">
+        <button class="copy-btn" id="copyBtn" onclick="copyCode()">Copier</button>
+        <pre id="modalCode"></pre>
+      </div>
+      <div class="modal-tip" id="modalTip"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function switchTab(i){document.querySelectorAll('.gtab').forEach((t,j)=>t.classList.toggle('active',i===j));document.querySelectorAll('.gtab-panel').forEach((p,j)=>p.classList.toggle('active',i===j))}
+function scrollSec(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+let cf='all';
+function setFilter(cat,btn){cf=cat;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filterCards()}
+function filterCards(){const q=document.getElementById('searchInput').value.toLowerCase().trim();let n=0;document.querySelectorAll('.card').forEach(c=>{const mc=cf==='all'||c.dataset.cat===cf;const mq=q===''||c.innerText.toLowerCase().includes(q);c.style.display=(mc&&mq)?'block':'none';if(mc&&mq)n++});document.getElementById('noResults').style.display=n===0?'block':'none'}
+
+const M={
+rpt1:{t:"Générer un rapport mensuel",d:"Cette macro copie les données du mois en cours depuis la feuille 'Données', crée un onglet nommé avec le mois/année et y colle les données formatées.",c:`Option Explicit
+
+Sub GenererRapportMensuel()
+    Dim wsDonnees As Worksheet, wsRapport As Worksheet
+    Dim nomMois As String, lastRow As Long
+    Application.ScreenUpdating = False
+    Set wsDonnees = ThisWorkbook.Sheets("Données")
+    nomMois = Format(Date, "MMMM YYYY")
+    On Error Resume Next
+    Application.DisplayAlerts = False
+    ThisWorkbook.Sheets(nomMois).Delete
+    Application.DisplayAlerts = True
+    On Error GoTo 0
+    Set wsRapport = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+    wsRapport.Name = nomMois
+    lastRow = wsDonnees.Cells(Rows.Count, "A").End(xlUp).Row
+    wsDonnees.Range("A1:F" & lastRow).Copy
+    wsRapport.Range("A1").PasteSpecial xlPasteValues
+    wsRapport.Range("A1").PasteSpecial xlPasteFormats
+    Application.CutCopyMode = False
+    wsRapport.Range("A1:F1").Interior.Color = RGB(31, 73, 125)
+    wsRapport.Range("A1:F1").Font.Color = RGB(255, 255, 255)
+    wsRapport.Range("A1:F1").Font.Bold = True
+    wsRapport.Columns("A:F").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Rapport '" & nomMois & "' généré !", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez 'Données' au nom de votre feuille source, et la plage A1:F à vos colonnes réelles. Vous pouvez enchaîner cette macro avec l'export PDF."},
+
+rpt2:{t:"Actualiser tous les TCD en un clic",d:"Actualise l'ensemble des tableaux croisés dynamiques du classeur en une seule exécution.",c:`Sub ActualiserTousTCD()
+    Dim ws As Worksheet, pt As PivotTable, n As Integer
+    Application.ScreenUpdating = False
+    For Each ws In ThisWorkbook.Worksheets
+        For Each pt In ws.PivotTables
+            pt.RefreshTable
+            n = n + 1
+        Next pt
+    Next ws
+    Application.ScreenUpdating = True
+    MsgBox n & " tableau(x) croisé(s) dynamique(s) actualisé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Associez cette macro à la touche F9 ou à un bouton sur votre tableau de bord pour un rafraîchissement instantané."},
+
+rpt3:{t:"Consolider plusieurs feuilles en synthèse",d:"Parcourt toutes les feuilles du classeur (sauf 'Synthèse') et copie les données dans une feuille de consolidation unique.",c:`Sub ConsoliderFeuilles()
+    Dim wsSynthese As Worksheet, ws As Worksheet
+    Dim lastRowSrc As Long, lastRowDest As Long
+    Application.ScreenUpdating = False
+    On Error Resume Next
+    Set wsSynthese = ThisWorkbook.Sheets("Synthèse")
+    If wsSynthese Is Nothing Then
+        Set wsSynthese = ThisWorkbook.Sheets.Add
+        wsSynthese.Name = "Synthèse"
+    End If
+    On Error GoTo 0
+    wsSynthese.Cells.Clear
+    lastRowDest = 1
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.Name <> "Synthèse" Then
+            lastRowSrc = ws.Cells(Rows.Count, "A").End(xlUp).Row
+            If lastRowSrc > 1 Then
+                Dim startRow As Long
+                startRow = IIf(lastRowDest = 1, 1, 2)
+                ws.Range("A" & startRow & ":F" & lastRowSrc).Copy
+                wsSynthese.Range("A" & lastRowDest).PasteSpecial xlPasteValues
+                lastRowDest = wsSynthese.Cells(Rows.Count,"A").End(xlUp).Row + 1
+            End If
+        End If
+    Next ws
+    Application.CutCopyMode = False
+    Application.ScreenUpdating = True
+    MsgBox "Consolidation : " & lastRowDest-1 & " lignes importées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez une colonne 'Source' en insérant <code>wsSynthese.Cells(lastRowDest, 7) = ws.Name</code> dans la boucle pour tracer l'origine de chaque ligne."},
+
+rpt4:{t:"Exporter un onglet en PDF",d:"Exporte la feuille active en fichier PDF dans le même dossier que le classeur, avec la date du jour dans le nom.",c:`Sub ExporterEnPDF()
+    Dim nomFichier As String, cheminFichier As String
+    nomFichier = ActiveSheet.Name & "_" & Format(Date, "YYYY-MM-DD") & ".pdf"
+    cheminFichier = ThisWorkbook.Path & "\" & nomFichier
+    With ActiveSheet.PageSetup
+        .Orientation = xlLandscape
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+        .PrintTitleRows = "$1:$1"
+    End With
+    ActiveSheet.ExportAsFixedFormat _
+        Type:=xlTypePDF, Filename:=cheminFichier, _
+        Quality:=xlQualityStandard, OpenAfterPublish:=False
+    MsgBox "PDF créé : " & nomFichier, vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Changez <code>OpenAfterPublish:=False</code> en <code>True</code> pour ouvrir le PDF automatiquement après sa création."},
+
+rpt5:{t:"Envoyer le rapport par e-mail (Outlook)",d:"Envoie le classeur actif en pièce jointe via Outlook, avec objet et corps de message prédéfinis.",c:`Sub EnvoyerRapportEmail()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim OutApp As Object, OutMail As Object
+    ThisWorkbook.Save
+    Set OutApp = CreateObject("Outlook.Application")
+    Set OutMail = OutApp.CreateItem(0)
+    With OutMail
+        .To = "equipe@entreprise.fr"
+        .Subject = "Rapport mensuel - " & Format(Date, "MMMM YYYY")
+        .Body = "Bonjour," & vbNewLine & vbNewLine & _
+                "Veuillez trouver ci-joint le rapport du mois de " & _
+                Format(Date, "MMMM YYYY") & "." & vbNewLine & vbNewLine & "Cordialement"
+        .Attachments.Add ThisWorkbook.FullName
+        .Display ' Remplacer par .Send pour envoi direct
+    End With
+    Set OutMail = Nothing : Set OutApp = Nothing
+End Sub`,tip:"<strong>Astuce :</strong> Remplacez <code>.Display</code> par <code>.Send</code> pour un envoi automatique. Activez d'abord la référence Outlook dans Outils → Références."},
+
+dat1:{t:"Supprimer les doublons et lignes vides",d:"Nettoie la feuille active en supprimant les doublons sur la colonne A, puis toutes les lignes dont la colonne A est vide.",c:`Sub NettoyerDonnees()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Dim nbD As Long, nbV As Integer
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+    ' Supprimer les doublons
+    Dim p As Range
+    Set p = ws.Range("A1:F" & lastRow)
+    nbD = p.Rows.Count
+    p.RemoveDuplicates Columns:=Array(1), Header:=xlYes
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+    nbD = nbD - lastRow
+    ' Supprimer les lignes vides (de bas en haut)
+    For i = lastRow To 2 Step -1
+        If Trim(ws.Cells(i, 1).Value) = "" Then
+            ws.Rows(i).Delete : nbV = nbV + 1
+        End If
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox nbD & " doublon(s) et " & nbV & " ligne(s) vide(s) supprimés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Modifiez <code>Columns:=Array(1)</code> pour vérifier les doublons sur plusieurs colonnes, ex: <code>Array(1,2,3)</code>."},
+
+dat2:{t:"Standardiser les formats",d:"Normalise les données : noms en majuscules, prénoms avec 1ère lettre en capitale, dates formatées, téléphones normalisés.",c:`Sub StandardiserFormats()
+    Dim ws As Worksheet, lastRow As Long, i As Long, v As String
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+    For i = 2 To lastRow
+        ' Col A : Nom en MAJUSCULES
+        If ws.Cells(i,1) <> "" Then ws.Cells(i,1) = UCase(Trim(ws.Cells(i,1)))
+        ' Col B : Prénom (1ère lettre capitale)
+        v = Trim(ws.Cells(i,2).Value)
+        If v <> "" Then ws.Cells(i,2) = UCase(Left(v,1)) & LCase(Mid(v,2))
+        ' Col C : Date au format JJ/MM/AAAA
+        If IsDate(ws.Cells(i,3)) Then ws.Cells(i,3).NumberFormat = "dd/mm/yyyy"
+        ' Col D : Téléphone (10 chiffres → XX.XX.XX.XX.XX)
+        v = Replace(Replace(Replace(ws.Cells(i,4)," ",""),".",""),"-","")
+        If Len(v) = 10 Then ws.Cells(i,4) = Left(v,2)&"."&Mid(v,3,2)&"."&Mid(v,5,2)&"."&Mid(v,7,2)&"."&Right(v,2)
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Standardisation de " & lastRow-1 & " lignes terminée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez les numéros de colonnes (1, 2, 3, 4) selon votre structure. Dupliquez les blocs pour traiter d'autres colonnes."},
+
+dat3:{t:"Importer des fichiers CSV depuis un dossier",d:"Parcourt un dossier, ouvre chaque fichier CSV trouvé et importe son contenu dans la feuille active.",c:`Sub ImporterCSVDossier()
+    Dim chemin As String, fichier As String
+    Dim wbT As Workbook, wsDest As Worksheet
+    Dim lastDest As Long, n As Integer
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier contenant les CSV"
+        If .Show <> -1 Then Exit Sub
+        chemin = .SelectedItems(1) & "\"
+    End With
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Set wsDest = ThisWorkbook.Sheets("Import")
+    n = 0 : fichier = Dir(chemin & "*.csv")
+    Do While fichier <> ""
+        Set wbT = Workbooks.Open(chemin & fichier)
+        lastDest = wsDest.Cells(Rows.Count,"A").End(xlUp).Row + 1
+        Dim startL As Long : startL = IIf(n=0,1,2)
+        wbT.Sheets(1).UsedRange.Offset(startL-1).Copy
+        wsDest.Range("A" & lastDest).PasteSpecial xlPasteValues
+        wbT.Close False : n = n + 1 : fichier = Dir()
+    Loop
+    Application.CutCopyMode = False
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    MsgBox n & " fichier(s) CSV importé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour filtrer uniquement certains CSV, remplacez <code>*.csv</code> par ex. <code>Ventes_*.csv</code>."},
+
+dat4:{t:"Remplacer des valeurs en masse",d:"Applique des règles de remplacement métier sur une colonne : transforme des codes ou abréviations en libellés complets.",c:`Sub RemplacerValeursMetier()
+    Dim ws As Worksheet, lastRow As Long, i As Long, j As Integer, n As Integer
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+    Dim regles(4, 1) As String
+    regles(0,0)="EN COURS" : regles(0,1)="En cours de traitement"
+    regles(1,0)="CLO"      : regles(1,1)="Clôturé"
+    regles(2,0)="ATT"      : regles(2,1)="En attente de validation"
+    regles(3,0)="ANN"      : regles(3,1)="Annulé"
+    regles(4,0)="OK"       : regles(4,1)="Validé"
+    For i = 2 To lastRow
+        Dim v As String : v = Trim(UCase(ws.Cells(i,2).Value))
+        For j = 0 To UBound(regles,1)
+            If v = regles(j,0) Then
+                ws.Cells(i,2).Value = regles(j,1) : n = n + 1 : Exit For
+            End If
+        Next j
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox n & " valeur(s) remplacée(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour gérer plus de règles, externalisez le tableau de correspondance dans un onglet 'Paramètres' et lisez-le dynamiquement."},
+
+dat5:{t:"Détecter et surligner les anomalies",d:"Parcourt les données et surligne en rouge les valeurs hors plage acceptable et en jaune les cellules obligatoires vides.",c:`Sub SurlighnerAnomalies()
+    Dim ws As Worksheet, lastRow As Long, i As Long, n As Integer
+    Const SEUIL_MIN As Double = 0
+    Const SEUIL_MAX As Double = 100000
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count, "A").End(xlUp).Row
+    ws.Range("A2:E" & lastRow).Interior.ColorIndex = xlNone
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,4)) And ws.Cells(i,4) <> "" Then
+            Dim v As Double : v = CDbl(ws.Cells(i,4).Value)
+            If v < SEUIL_MIN Or v > SEUIL_MAX Then
+                ws.Rows(i).Interior.Color = RGB(255,199,206)
+                ws.Cells(i,4).Font.Color = RGB(156,0,6)
+                ws.Cells(i,4).Font.Bold = True : n = n + 1
+            End If
+        End If
+        If ws.Cells(i,1) = "" Or ws.Cells(i,2) = "" Then
+            ws.Cells(i,1).Resize(1,2).Interior.Color = RGB(255,235,156) : n = n + 1
+        End If
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox IIf(n=0,"Aucune anomalie détectée.",n & " anomalie(s) détectée(s)."), IIf(n=0,vbInformation,vbExclamation)
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez <code>SEUIL_MIN</code> et <code>SEUIL_MAX</code> à vos règles métier et le numéro de colonne selon votre structure."},
+
+fin1:{t:"Comparer le réalisé vs le budget",d:"Calcule les écarts entre réalisé et budget et colorie les lignes selon leur niveau d'écart.",c:`Sub ComparerBudgetRealise()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,5)="Écart (€)" : ws.Cells(1,6)="Écart (%)" : ws.Cells(1,7)="Statut"
+    ws.Range("E1:G1").Font.Bold = True
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,3)) And IsNumeric(ws.Cells(i,4)) Then
+            Dim bud As Double : bud = CDbl(ws.Cells(i,3).Value)
+            Dim rea As Double : rea = CDbl(ws.Cells(i,4).Value)
+            Dim eca As Double : eca = rea - bud
+            ws.Cells(i,5).Value = eca
+            ws.Cells(i,5).NumberFormat = "#,##0.00 €;[Red]-#,##0.00 €"
+            Dim pct As Double
+            If bud <> 0 Then
+                pct = (eca / Abs(bud)) * 100
+                ws.Cells(i,6).Value = pct/100
+                ws.Cells(i,6).NumberFormat = "0.0%"
+            End If
+            Select Case True
+                Case pct < -10 : ws.Cells(i,7)="⚠ Dépassement" : ws.Rows(i).Interior.Color=RGB(255,199,206)
+                Case pct > 10  : ws.Cells(i,7)="✓ Favorable"   : ws.Rows(i).Interior.Color=RGB(198,239,206)
+                Case Else       : ws.Cells(i,7)="→ Normal"       : ws.Rows(i).Interior.ColorIndex=xlNone
+            End Select
+        End If
+    Next i
+    ws.Columns("A:G").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Analyse budgétaire terminée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Modifiez le seuil <code>10</code> (%) selon votre tolérance budgétaire. Adaptez les colonnes C (Budget) et D (Réalisé) à votre structure."},
+
+fin2:{t:"Calculer les projections de fin d'année",d:"Calcule le réalisé à date, extrapole une projection annuelle et estime l'écart final probable.",c:`Sub CalculerProjections()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Dim mois As Integer : mois = Month(Date)
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Range("E1:H1").Value = Array("Réalisé YTD","Projection annuelle","Budget annuel","Écart prévisionnel")
+    ws.Range("E1:H1").Font.Bold = True
+    ws.Range("E1:H1").Interior.Color = RGB(31,73,125)
+    ws.Range("E1:H1").Font.Color = RGB(255,255,255)
+    For i = 2 To lastRow
+        Dim r As Double : r = CDbl(ws.Cells(i,3).Value)
+        Dim b As Double : b = CDbl(ws.Cells(i,4).Value)
+        Dim proj As Double : proj = IIf(mois>0,(r/mois)*12,0)
+        ws.Cells(i,5).Value = r : ws.Cells(i,6).Value = proj
+        ws.Cells(i,7).Value = b : ws.Cells(i,8).Value = proj - b
+        ws.Range(ws.Cells(i,5),ws.Cells(i,8)).NumberFormat = "#,##0 €"
+        If proj > b*1.05 Then ws.Cells(i,8).Font.Color = RGB(156,0,6)
+        ElseIf proj < b*0.95 Then ws.Cells(i,8).Font.Color = RGB(0,97,0)
+        End If
+    Next i
+    ws.Columns("A:H").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Projections calculées sur " & mois & " mois.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour une projection saisonnière, remplacez la division par <code>mois</code> par un coefficient saisonnier propre à votre activité."},
+
+fin3:{t:"Ventiler les charges par centre de coût",d:"Lit une liste de transactions et crée un onglet de synthèse avec les totaux par centre de coût.",c:`Sub VentilerParCentreCout()
+    Dim wsS As Worksheet, wsR As Worksheet
+    Dim dico As Object, cle As Variant
+    Dim lastRow As Long, i As Long, ligne As Integer
+    Dim total As Double
+    Application.ScreenUpdating = False
+    Set dico = CreateObject("Scripting.Dictionary")
+    Set wsS = ThisWorkbook.Sheets("Transactions")
+    lastRow = wsS.Cells(Rows.Count,"A").End(xlUp).Row
+    For i = 2 To lastRow
+        Dim cc As String : cc = Trim(wsS.Cells(i,2).Value)
+        Dim mt As Double
+        If IsNumeric(wsS.Cells(i,4)) Then mt = CDbl(wsS.Cells(i,4).Value)
+        If cc <> "" Then
+            If dico.Exists(cc) Then dico(cc) = dico(cc) + mt Else dico.Add cc, mt
+        End If
+    Next i
+    On Error Resume Next
+    Set wsR = ThisWorkbook.Sheets("Synthèse CC")
+    If wsR Is Nothing Then Set wsR = ThisWorkbook.Sheets.Add : wsR.Name = "Synthèse CC"
+    On Error GoTo 0
+    wsR.Cells.Clear
+    wsR.Range("A1:B1").Value = Array("Centre de coût","Montant total (€)")
+    wsR.Range("A1:B1").Font.Bold = True
+    ligne = 2 : total = 0
+    For Each cle In dico.Keys
+        wsR.Cells(ligne,1) = cle : wsR.Cells(ligne,2) = dico(cle)
+        wsR.Cells(ligne,2).NumberFormat = "#,##0.00 €"
+        total = total + dico(cle) : ligne = ligne + 1
+    Next cle
+    wsR.Cells(ligne,1) = "TOTAL" : wsR.Cells(ligne,2) = total
+    wsR.Cells(ligne,1).Font.Bold = True : wsR.Cells(ligne,2).Font.Bold = True
+    wsR.Cells(ligne,2).NumberFormat = "#,##0.00 €"
+    wsR.Columns("A:B").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox dico.Count & " centres de coût ventilés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Renommez 'Transactions' selon le nom de votre feuille. Colonne B = code centre de coût, colonne D = montant."},
+
+fin4:{t:"Mettre à jour les taux de change",d:"Lit les taux de change depuis des cellules de référence et applique la conversion sur toute la colonne montant.",c:`Sub MettreAJourTauxChange()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Set ws = ActiveSheet
+    Dim txUSD As Double : txUSD = ws.Range("I1").Value
+    Dim txGBP As Double : txGBP = ws.Range("I2").Value
+    If txUSD = 0 Or txGBP = 0 Then
+        MsgBox "Saisir les taux en I1 (EUR/USD) et I2 (EUR/GBP).", vbExclamation : Exit Sub
+    End If
+    Application.ScreenUpdating = False
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,6)="Montant USD" : ws.Cells(1,7)="Montant GBP"
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,5)) Then
+            Dim m As Double : m = CDbl(ws.Cells(i,5).Value)
+            ws.Cells(i,6).Value = Round(m*txUSD,2) : ws.Cells(i,6).NumberFormat = "#,##0.00 $"
+            ws.Cells(i,7).Value = Round(m*txGBP,2) : ws.Cells(i,7).NumberFormat = "#,##0.00 £"
+        End If
+    Next i
+    ws.Range("J1").Value = "Mis à jour le : " & Format(Now,"dd/mm/yyyy hh:mm")
+    Application.ScreenUpdating = True
+    MsgBox "Conversions appliquées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour récupérer les taux automatiquement, utilisez Power Query (Données → Nouvelle requête → Depuis le Web) pointant vers une API de taux de change publique."},
+
+fin5:{t:"Générer un graphique d'évolution mensuelle",d:"Crée automatiquement un graphique en courbes des dépenses mensuelles à partir des données de la feuille active.",c:`Sub CreerGraphiqueEvolution()
+    Dim ws As Worksheet, co As ChartObject, cht As Chart
+    Set ws = ActiveSheet
+    Dim lastRow As Long : lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    For Each co In ws.ChartObjects : co.Delete : Next co
+    Set co = ws.ChartObjects.Add(350, 20, 480, 280)
+    Set cht = co.Chart
+    With cht
+        .SetSourceData ws.Range("A1:B" & lastRow)
+        .ChartType = xlLineMarkers
+        .HasTitle = True
+        .ChartTitle.Text = "Évolution mensuelle — " & Year(Date)
+        With .Axes(xlValue)
+            .HasTitle = True
+            .AxisTitle.Text = "Montant (€)"
+            .NumberFormat = "#,##0 €"
+        End With
+        With .SeriesCollection(1)
+            .Format.Line.ForeColor.RGB = RGB(31,73,125)
+            .Format.Line.Weight = 2.5
+            .MarkerStyle = xlMarkerStyleCircle
+            .MarkerSize = 6
+        End With
+        .PlotArea.Interior.Color = RGB(255,255,255)
+        .ChartArea.Border.LineStyle = xlNone
+    End With
+    MsgBox "Graphique créé.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Changez <code>xlLineMarkers</code> en <code>xlColumnClustered</code> pour des histogrammes, ou <code>xlArea</code> pour un graphique en aires."},
+
+rh1:{t:"Calculer les congés et soldes",d:"Calcule pour chaque collaborateur le nombre de jours de congés pris, restants et le solde RTT.",c:`Sub CalculerConges()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Const CA As Integer = 25, RTT As Integer = 11
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Range("E1:I1").Value = Array("Congés pris","Solde congés","RTT pris","Solde RTT","Alerte")
+    ws.Range("E1:I1").Font.Bold = True
+    ws.Range("E1:I1").Interior.Color = RGB(31,73,125)
+    ws.Range("E1:I1").Font.Color = RGB(255,255,255)
+    For i = 2 To lastRow
+        Dim cp As Double : cp = CDbl(ws.Cells(i,3).Value)
+        Dim rp As Double : rp = CDbl(ws.Cells(i,4).Value)
+        Dim sc As Double : sc = CA - cp
+        Dim sr As Double : sr = RTT - rp
+        ws.Cells(i,5)=cp : ws.Cells(i,6)=sc : ws.Cells(i,7)=rp : ws.Cells(i,8)=sr
+        If Month(Date) >= 10 And sc > 10 Then
+            ws.Cells(i,9)="⚠ Solde élevé" : ws.Cells(i,9).Font.Color=RGB(156,0,6)
+        ElseIf sc < 0 Then
+            ws.Cells(i,9)="⛔ Dépassement" : ws.Rows(i).Interior.Color=RGB(255,199,206)
+        Else
+            ws.Cells(i,9)="✓ OK" : ws.Cells(i,9).Font.Color=RGB(0,97,0)
+        End If
+    Next i
+    ws.Columns("A:I").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Calcul des soldes terminé.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Modifiez <code>CA</code> (25) et <code>RTT</code> (11) selon votre accord d'entreprise. Le seuil d'alerte (10 jours) est configurable."},
+
+rh2:{t:"Générer les plannings hebdomadaires",d:"Génère automatiquement un planning de présence pour la semaine courante à partir d'une liste de collaborateurs.",c:`Sub GenererPlanningHebdo()
+    Dim wsC As Worksheet, wsP As Worksheet
+    Dim lastRow As Long, i As Long, j As Integer
+    Dim lundi As Date : lundi = Date - Weekday(Date, vbMonday) + 1
+    Application.ScreenUpdating = False
+    Set wsC = ThisWorkbook.Sheets("Collaborateurs")
+    lastRow = wsC.Cells(Rows.Count,"A").End(xlUp).Row
+    On Error Resume Next
+    Set wsP = ThisWorkbook.Sheets("Planning")
+    If wsP Is Nothing Then Set wsP = ThisWorkbook.Sheets.Add : wsP.Name = "Planning"
+    On Error GoTo 0
+    wsP.Cells.Clear
+    wsP.Cells(1,1) = "Collaborateur"
+    Dim jours(4) As String
+    jours(0)="Lundi":jours(1)="Mardi":jours(2)="Mercredi":jours(3)="Jeudi":jours(4)="Vendredi"
+    For j = 0 To 4
+        wsP.Cells(1,j+2) = jours(j) & Chr(10) & Format(lundi+j,"dd/mm")
+        wsP.Cells(1,j+2).WrapText = True
+    Next j
+    wsP.Range("A1:F1").Font.Bold = True
+    wsP.Range("A1:F1").Interior.Color = RGB(31,73,125)
+    wsP.Range("A1:F1").Font.Color = RGB(255,255,255)
+    wsP.Range("A1:F1").HorizontalAlignment = xlCenter
+    For i = 2 To lastRow
+        wsP.Cells(i,1) = wsC.Cells(i,1).Value
+        For j = 2 To 6 : wsP.Cells(i,j) = "Présent" : wsP.Cells(i,j).HorizontalAlignment = xlCenter : Next j
+        If i Mod 2 = 0 Then wsP.Rows(i).Interior.Color = RGB(242,242,242)
+    Next i
+    wsP.Columns("A:F").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Planning semaine du " & Format(lundi,"dd/mm/yyyy") & " généré.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez une liste de validation dans les cellules du planning pour choisir entre 'Présent', 'Télétravail', 'Congé', 'Formation'."},
+
+rh3:{t:"Récapitulatif des heures supplémentaires",d:"Calcule les heures supplémentaires par collaborateur à partir d'une feuille de pointage.",c:`Sub RecapHeuresSup()
+    Dim ws As Worksheet, wsR As Worksheet
+    Dim dico As Object, cle As Variant
+    Dim lastRow As Long, i As Long, ligne As Integer
+    Const H_NRM As Double = 7
+    Application.ScreenUpdating = False
+    Set dico = CreateObject("Scripting.Dictionary")
+    Set ws = ThisWorkbook.Sheets("Pointage")
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    For i = 2 To lastRow
+        Dim nm As String : nm = Trim(ws.Cells(i,1).Value)
+        Dim hr As Double
+        If IsNumeric(ws.Cells(i,3)) Then hr = CDbl(ws.Cells(i,3).Value)
+        If nm <> "" Then
+            If dico.Exists(nm) Then dico(nm) = dico(nm) + hr Else dico.Add nm, hr
+        End If
+    Next i
+    On Error Resume Next
+    Set wsR = ThisWorkbook.Sheets("Récap HS")
+    If wsR Is Nothing Then Set wsR = ThisWorkbook.Sheets.Add : wsR.Name = "Récap HS"
+    On Error GoTo 0
+    wsR.Cells.Clear
+    wsR.Range("A1:E1").Value = Array("Collaborateur","H. travaillées","H. normales","H. supp.","Statut")
+    wsR.Range("A1:E1").Font.Bold = True
+    ligne = 2
+    Dim nbJ As Integer : nbJ = Application.WorksheetFunction.NetworkDays(DateSerial(Year(Date),Month(Date),1),Date)
+    For Each cle In dico.Keys
+        Dim ht As Double : ht = dico(cle)
+        Dim hn As Double : hn = nbJ * H_NRM
+        Dim hs As Double : hs = ht - hn
+        wsR.Cells(ligne,1)=cle : wsR.Cells(ligne,2)=ht : wsR.Cells(ligne,3)=hn
+        wsR.Cells(ligne,4)=hs
+        wsR.Cells(ligne,5) = IIf(hs>0,"⚠ "&Round(hs,1)&"h supp.","✓ Normal")
+        If hs > 5 Then wsR.Rows(ligne).Interior.Color = RGB(255,235,156)
+        ligne = ligne + 1
+    Next cle
+    wsR.Columns("A:E").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Récapitulatif généré.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Modifiez <code>H_NRM</code> (7h ou 8h selon votre convention). La feuille 'Pointage' doit avoir : Col A = Nom, Col B = Date, Col C = Heures travaillées."},
+
+rh4:{t:"E-mail personnalisé à chaque salarié",d:"Envoie automatiquement un e-mail personnalisé à chaque collaborateur listé avec son solde de congés.",c:`Sub EnvoyerEmailsSalaries()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim ws As Worksheet, OutApp As Object, OutMail As Object
+    Dim lastRow As Long, i As Long
+    Set ws = ThisWorkbook.Sheets("RH")
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    If MsgBox("Envoyer "&lastRow-1&" e-mails ?",vbYesNo+vbQuestion) = vbNo Then Exit Sub
+    Set OutApp = CreateObject("Outlook.Application")
+    For i = 2 To lastRow
+        Dim prenom As String : prenom = ws.Cells(i,2).Value
+        Dim email As String  : email  = ws.Cells(i,3).Value
+        Dim sc As String     : sc     = ws.Cells(i,6).Value
+        Dim sr As String     : sr     = ws.Cells(i,8).Value
+        If email <> "" Then
+            Set OutMail = OutApp.CreateItem(0)
+            With OutMail
+                .To = email
+                .Subject = "Solde de congés — " & Format(Date,"MMMM YYYY")
+                .HTMLBody = "<p>Bonjour "&prenom&",</p>" & _
+                    "<p>Votre solde au "&Format(Date,"dd/mm/yyyy")&" :</p>" & _
+                    "<ul><li><b>Congés payés :</b> "&sc&" jours</li>" & _
+                    "<li><b>RTT :</b> "&sr&" jours</li></ul>" & _
+                    "<p>Cordialement,<br>Le service RH</p>"
+                .Send
+            End With
+            Set OutMail = Nothing
+        End If
+    Next i
+    Set OutApp = Nothing
+    MsgBox "E-mails envoyés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Remplacez <code>.Send</code> par <code>.Display</code> pour vérifier chaque e-mail avant envoi. Testez d'abord en limitant la boucle à <code>i = 2 To 2</code>."},
+
+rh5:{t:"Suivi des formations et habilitations",d:"Identifie et surligne les habilitations arrivant à échéance dans les 30 jours ou déjà expirées.",c:`Sub SuivreHabilitations()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Dim nbA As Integer, nbE As Integer
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Range("A2:E" & lastRow).Interior.ColorIndex = xlNone
+    ws.Cells(1,6)="Statut" : ws.Cells(1,7)="Jours restants"
+    ws.Range("F1:G1").Font.Bold = True
+    For i = 2 To lastRow
+        If IsDate(ws.Cells(i,4).Value) Then
+            Dim exp As Date : exp = CDate(ws.Cells(i,4).Value)
+            Dim jr As Long : jr = DateDiff("d", Date, exp)
+            ws.Cells(i,7) = jr
+            Select Case True
+                Case jr < 0
+                    ws.Rows(i).Interior.Color=RGB(255,199,206)
+                    ws.Cells(i,6)="⛔ EXPIRÉ" : ws.Cells(i,6).Font.Color=RGB(156,0,6) : nbE=nbE+1
+                Case jr <= 30
+                    ws.Rows(i).Interior.Color=RGB(255,235,156)
+                    ws.Cells(i,6)="⚠ Renouveler sous 30j" : ws.Cells(i,6).Font.Color=RGB(156,87,0) : nbA=nbA+1
+                Case Else
+                    ws.Cells(i,6)="✓ Valide" : ws.Cells(i,6).Font.Color=RGB(0,97,0)
+            End Select
+        End If
+    Next i
+    ws.Columns("A:G").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox nbE&" expirée(s), "&nbA&" à renouveler sous 30j.", IIf(nbE>0,vbExclamation,vbInformation)
+End Sub`,tip:"<strong>Astuce :</strong> Modifiez le seuil de 30 jours selon vos délais de renouvellement. Chaînez avec la macro d'envoi d'e-mails pour notifier automatiquement les responsables."},
+
+prj1:{t:"Mettre à jour un diagramme de Gantt",d:"Colorie automatiquement les cellules d'un Gantt selon les dates de début/fin et le pourcentage d'avancement.",c:`Sub MettreAJourGantt()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ' Structure : Col A=Tâche, Col B=Début, Col C=Fin, Col D=% Avancement
+    ' Col E+ = dates de la grille (en ligne 1)
+    For i = 2 To lastRow
+        If IsDate(ws.Cells(i,2)) And IsDate(ws.Cells(i,3)) Then
+            Dim db As Date : db = CDate(ws.Cells(i,2).Value)
+            Dim fn As Date : fn = CDate(ws.Cells(i,3).Value)
+            Dim av As Double : av = CDbl(ws.Cells(i,4).Value)
+            ws.Range(ws.Cells(i,5),ws.Cells(i,30)).Interior.ColorIndex = xlNone
+            Dim col As Integer
+            For col = 5 To 30
+                If IsDate(ws.Cells(1,col)) Then
+                    Dim dc As Date : dc = CDate(ws.Cells(1,col).Value)
+                    If dc >= db And dc <= fn Then
+                        Dim pg As Double : pg = (dc-db)/(fn-db)
+                        If pg <= av Then
+                            ws.Cells(i,col).Interior.Color = RGB(0,112,192)
+                        Else
+                            ws.Cells(i,col).Interior.Color = RGB(189,215,238)
+                        End If
+                    End If
+                End If
+            Next col
+        End If
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Diagramme de Gantt mis à jour.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les dates en ligne 1 (colonnes E à AD) doivent être des dates Excel réelles. Adaptez la plage <code>5 To 30</code> à votre grille temporelle."},
+
+prj2:{t:"Alerter sur les jalons dépassés",d:"Vérifie chaque jalon et génère un rapport des retards avec le nombre de jours de dépassement.",c:`Sub AlerterJalons()
+    Dim ws As Worksheet, wsA As Worksheet
+    Dim lastRow As Long, i As Long, ligne As Integer, n As Integer
+    Application.ScreenUpdating = False
+    Set ws = ThisWorkbook.Sheets("Jalons")
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    On Error Resume Next
+    Set wsA = ThisWorkbook.Sheets("Alertes")
+    If wsA Is Nothing Then Set wsA = ThisWorkbook.Sheets.Add : wsA.Name = "Alertes"
+    On Error GoTo 0
+    wsA.Cells.Clear
+    wsA.Range("A1:F1").Value = Array("Projet","Jalon","Date prévue","Statut","Jours retard","Responsable")
+    wsA.Range("A1:F1").Font.Bold = True
+    wsA.Range("A1:F1").Interior.Color = RGB(192,0,0)
+    wsA.Range("A1:F1").Font.Color = RGB(255,255,255)
+    ligne = 2
+    For i = 2 To lastRow
+        If IsDate(ws.Cells(i,3)) Then
+            Dim dp As Date : dp = CDate(ws.Cells(i,3).Value)
+            Dim st As String : st = LCase(Trim(ws.Cells(i,4).Value))
+            If dp < Date And st <> "terminé" And st <> "clôturé" Then
+                Dim ret As Long : ret = DateDiff("d",dp,Date)
+                wsA.Cells(ligne,1)=ws.Cells(i,1) : wsA.Cells(ligne,2)=ws.Cells(i,2)
+                wsA.Cells(ligne,3)=dp : wsA.Cells(ligne,3).NumberFormat="dd/mm/yyyy"
+                wsA.Cells(ligne,4)=ws.Cells(i,4) : wsA.Cells(ligne,5)=ret&"j"
+                wsA.Cells(ligne,6)=ws.Cells(i,5)
+                If ret>14 Then wsA.Rows(ligne).Interior.Color=RGB(255,199,206)
+                ElseIf ret>7 Then wsA.Rows(ligne).Interior.Color=RGB(255,235,156)
+                End If
+                ligne=ligne+1 : n=n+1
+            End If
+        End If
+    Next i
+    wsA.Columns("A:F").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox IIf(n=0,"Aucun retard !",n&" jalon(s) en retard → onglet 'Alertes'."), IIf(n=0,vbInformation,vbExclamation)
+End Sub`,tip:"<strong>Astuce :</strong> Renommez 'Jalons' selon votre feuille. Étendez les conditions de clôture si votre organisation utilise d'autres libellés ('Validé', 'Livré', etc.)."},
+
+prj3:{t:"Consolider les statuts de plusieurs projets",d:"Agrège les statuts de plusieurs feuilles de projets en un tableau de bord de synthèse unique.",c:`Sub ConsoliderStatuts()
+    Dim wsR As Worksheet, ws As Worksheet
+    Dim ligne As Integer
+    Application.ScreenUpdating = False
+    On Error Resume Next
+    Set wsR = ThisWorkbook.Sheets("Tableau de bord")
+    If wsR Is Nothing Then
+        Set wsR = ThisWorkbook.Sheets.Add(Before:=ThisWorkbook.Sheets(1))
+        wsR.Name = "Tableau de bord"
+    End If
+    On Error GoTo 0
+    wsR.Cells.Clear
+    wsR.Range("A1:F1").Value = Array("Projet","Total","Terminées","En cours","En retard","% Avancement")
+    wsR.Range("A1:F1").Font.Bold = True
+    wsR.Range("A1:F1").Interior.Color = RGB(31,73,125)
+    wsR.Range("A1:F1").Font.Color = RGB(255,255,255)
+    ligne = 2
+    For Each ws In ThisWorkbook.Worksheets
+        If ws.Name <> "Tableau de bord" And ws.Name <> "Paramètres" Then
+            Dim lr As Long : lr = ws.Cells(Rows.Count,"A").End(xlUp).Row
+            If lr > 1 Then
+                Dim tot As Integer : tot = lr-1
+                Dim trm As Integer : trm = 0
+                Dim ec As Integer : ec = 0
+                Dim ret As Integer : ret = 0
+                Dim i As Long
+                For i = 2 To lr
+                    Select Case LCase(Trim(ws.Cells(i,3).Value))
+                        Case "terminé","clôturé","fait" : trm = trm+1
+                        Case Else : ec = ec+1
+                            If IsDate(ws.Cells(i,4)) Then
+                                If CDate(ws.Cells(i,4)) < Date Then ret = ret+1
+                            End If
+                    End Select
+                Next i
+                wsR.Cells(ligne,1)=ws.Name : wsR.Cells(ligne,2)=tot
+                wsR.Cells(ligne,3)=trm : wsR.Cells(ligne,4)=ec : wsR.Cells(ligne,5)=ret
+                wsR.Cells(ligne,6)=IIf(tot>0,trm/tot,0) : wsR.Cells(ligne,6).NumberFormat="0%"
+                If ret > 0 Then wsR.Rows(ligne).Interior.Color = RGB(255,235,156)
+                ligne = ligne+1
+            End If
+        End If
+    Next ws
+    wsR.Columns("A:F").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Tableau de bord mis à jour.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Chaque onglet projet doit avoir la même structure (colonne C = Statut, D = Date de fin). Ajoutez les onglets à exclure dans le <code>If ws.Name <> ...</code>."},
+
+prj4:{t:"Tableau de bord de suivi des risques",d:"Génère un registre des risques avec scoring automatique (probabilité × impact) et priorisation.",c:`Sub GenererRegistreRisques()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,5)="Score" : ws.Cells(1,6)="Niveau" : ws.Cells(1,7)="Priorité"
+    ws.Range("E1:G1").Font.Bold = True
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,2)) And IsNumeric(ws.Cells(i,3)) Then
+            Dim pr As Integer : pr = CInt(ws.Cells(i,2).Value)
+            Dim im As Integer : im = CInt(ws.Cells(i,3).Value)
+            Dim sc As Integer : sc = pr * im
+            ws.Cells(i,5).Value = sc : ws.Cells(i,5).Font.Bold = True
+            Select Case sc
+                Case 1 To 4
+                    ws.Cells(i,6)="Faible" : ws.Cells(i,5).Font.Color=RGB(0,97,0)
+                    ws.Cells(i,6).Interior.Color=RGB(198,239,206) : ws.Cells(i,7)="3 - Surveillance"
+                Case 5 To 9
+                    ws.Cells(i,6)="Modéré" : ws.Cells(i,5).Font.Color=RGB(156,87,0)
+                    ws.Cells(i,6).Interior.Color=RGB(255,235,156) : ws.Cells(i,7)="2 - Plan d'action"
+                Case 10 To 25
+                    ws.Cells(i,6)="Critique" : ws.Cells(i,5).Font.Color=RGB(156,0,6)
+                    ws.Cells(i,6).Interior.Color=RGB(255,199,206) : ws.Cells(i,7)="1 - Action immédiate"
+            End Select
+        End If
+    Next i
+    ws.Range("A1:G" & lastRow).Sort Key1:=ws.Range("E2"),Order1:=xlDescending,Header:=xlYes
+    ws.Columns("A:G").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Registre des risques trié par criticité.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La matrice probabilité × impact (1 à 5) donne un score de 1 à 25. Col B = Probabilité, Col C = Impact. Adaptez les seuils (4/9/25) selon votre méthodologie."},
+
+prj5:{t:"Archiver les projets clôturés",d:"Déplace vers une feuille 'Archives' les projets dont le statut est 'Clôturé'.",c:`Sub ArchiverProjets()
+    Dim wsA As Worksheet, wsAr As Worksheet
+    Dim lastRow As Long, i As Long, n As Integer
+    Set wsA = ThisWorkbook.Sheets("Projets")
+    lastRow = wsA.Cells(Rows.Count,"A").End(xlUp).Row
+    If MsgBox("Archiver les projets clôturés ?",vbYesNo+vbQuestion) = vbNo Then Exit Sub
+    Application.ScreenUpdating = False
+    On Error Resume Next
+    Set wsAr = ThisWorkbook.Sheets("Archives")
+    If wsAr Is Nothing Then
+        Set wsAr = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        wsAr.Name = "Archives"
+        wsA.Rows(1).Copy wsAr.Rows(1)
+    End If
+    On Error GoTo 0
+    Dim lastAr As Long : lastAr = wsAr.Cells(Rows.Count,"A").End(xlUp).Row + 1
+    For i = lastRow To 2 Step -1
+        If LCase(Trim(wsA.Cells(i,5).Value)) = "clôturé" Then
+            wsA.Rows(i).Copy wsAr.Rows(lastAr)
+            wsAr.Cells(lastAr, wsAr.Cells(1,Columns.Count).End(xlToLeft).Column+1) = "Archivé " & Format(Date,"dd/mm/yyyy")
+            wsA.Rows(i).Delete
+            lastAr=lastAr+1 : n=n+1
+        End If
+    Next i
+    Application.CutCopyMode = False
+    Application.ScreenUpdating = True
+    MsgBox n & " projet(s) archivé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Changez 'clôturé' par le statut utilisé dans votre organisation. La colonne de statut (ici E) doit être adaptée à votre structure."},
+
+vnt1:{t:"Générer des devis depuis un modèle",d:"Crée un nouveau devis en dupliquant un onglet modèle et en le personnalisant avec les infos client saisies.",c:`Sub GenererDevis()
+    Dim wsM As Worksheet, wsD As Worksheet
+    Dim nomC As String, numD As String
+    nomC = InputBox("Nom du client :", "Nouveau devis")
+    If nomC = "" Then Exit Sub
+    numD = "DEV-" & Format(Date,"YYYYMM") & "-" & Format(Int(Rnd()*900)+100,"000")
+    Application.ScreenUpdating = False
+    Set wsM = ThisWorkbook.Sheets("Modèle Devis")
+    wsM.Copy After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count)
+    Set wsD = ActiveSheet
+    wsD.Name = Left(nomC,20) & " " & Format(Date,"dd-mm")
+    With wsD
+        .Range("C3").Value = nomC
+        .Range("C4").Value = numD
+        .Range("C5").Value = Date
+        .Range("C6").Value = DateAdd("d",30,Date)
+        .Range("C3").Font.Bold = True
+    End With
+    ' Registre
+    On Error Resume Next
+    Dim wsReg As Worksheet : Set wsReg = ThisWorkbook.Sheets("Registre")
+    If Not wsReg Is Nothing Then
+        Dim lr As Long : lr = wsReg.Cells(Rows.Count,"A").End(xlUp).Row + 1
+        wsReg.Cells(lr,1)=numD : wsReg.Cells(lr,2)=nomC
+        wsReg.Cells(lr,3)=Date : wsReg.Cells(lr,4)="En attente"
+    End If
+    On Error GoTo 0
+    Application.ScreenUpdating = True
+    MsgBox "Devis "&numD&" créé pour "&nomC, vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Créez un onglet 'Modèle Devis' avec votre mise en page, logo et formules. La macro ne fait que dupliquer et personnaliser ce modèle."},
+
+vnt2:{t:"Mettre à jour les stocks",d:"Met à jour le stock disponible après enregistrement d'un mouvement (entrée/sortie) et alerte si stock bas.",c:`Sub MettreAJourStock()
+    Dim wsS As Worksheet, wsMvt As Worksheet
+    Dim lrM As Long, lrS As Long, i As Long, j As Long
+    Application.ScreenUpdating = False
+    Set wsS = ThisWorkbook.Sheets("Stock")
+    Set wsMvt = ThisWorkbook.Sheets("Mouvements")
+    lrM = wsMvt.Cells(Rows.Count,"A").End(xlUp).Row
+    lrS = wsS.Cells(Rows.Count,"A").End(xlUp).Row
+    For i = 2 To lrM
+        If Trim(wsMvt.Cells(i,5)) = "" Or Trim(wsMvt.Cells(i,5)) = "Non traité" Then
+            Dim ref As String : ref = Trim(wsMvt.Cells(i,2).Value)
+            Dim typ As String : typ = Trim(wsMvt.Cells(i,3).Value)
+            Dim qte As Double : qte = CDbl(wsMvt.Cells(i,4).Value)
+            For j = 2 To lrS
+                If Trim(wsS.Cells(j,1)) = ref Then
+                    Dim stk As Double : stk = CDbl(wsS.Cells(j,3).Value)
+                    If typ = "Entrée" Then
+                        wsS.Cells(j,3) = stk + qte
+                    ElseIf typ = "Sortie" Then
+                        If stk >= qte Then wsS.Cells(j,3) = stk - qte Else wsMvt.Cells(i,5)="ERREUR stock" : GoTo Suite
+                    End If
+                    wsS.Cells(j,4) = Now
+                    Dim seuil As Double : seuil = CDbl(wsS.Cells(j,5).Value)
+                    If wsS.Cells(j,3) <= seuil Then wsS.Rows(j).Interior.Color=RGB(255,199,206) Else wsS.Rows(j).Interior.ColorIndex=xlNone
+                    Exit For
+                End If
+            Next j
+            wsMvt.Cells(i,5) = "Traité"
+        End If
+        Suite:
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Stocks mis à jour.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Feuille 'Stock' : Col A=Référence, B=Libellé, C=Quantité, D=Date MAJ, E=Seuil. Feuille 'Mouvements' : A=Date, B=Référence, C=Type, D=Quantité, E=Statut."},
+
+vnt3:{t:"Identifier les produits à réapprovisionner",d:"Génère une liste des produits en dessous du seuil de réapprovisionnement, triée par urgence.",c:`Sub IdentifierReappro()
+    Dim ws As Worksheet, wsC As Worksheet
+    Dim lastRow As Long, i As Long, ligne As Integer, n As Integer
+    Application.ScreenUpdating = False
+    Set ws = ThisWorkbook.Sheets("Stock")
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    On Error Resume Next
+    Set wsC = ThisWorkbook.Sheets("À Commander")
+    If wsC Is Nothing Then Set wsC = ThisWorkbook.Sheets.Add : wsC.Name = "À Commander"
+    On Error GoTo 0
+    wsC.Cells.Clear
+    wsC.Range("A1:F1").Value = Array("Référence","Libellé","Stock actuel","Seuil","Qté à commander","Fournisseur")
+    wsC.Range("A1:F1").Font.Bold = True
+    wsC.Range("A1:F1").Interior.Color = RGB(192,0,0)
+    wsC.Range("A1:F1").Font.Color = RGB(255,255,255)
+    ligne = 2
+    For i = 2 To lastRow
+        Dim stk As Double : stk = CDbl(ws.Cells(i,3).Value)
+        Dim seu As Double : seu = CDbl(ws.Cells(i,5).Value)
+        If stk <= seu Then
+            Dim cib As Double : cib = CDbl(ws.Cells(i,6).Value)
+            Dim qte As Double : qte = IIf(cib>0,cib-stk,seu*2-stk)
+            wsC.Cells(ligne,1)=ws.Cells(i,1) : wsC.Cells(ligne,2)=ws.Cells(i,2)
+            wsC.Cells(ligne,3)=stk : wsC.Cells(ligne,4)=seu
+            wsC.Cells(ligne,5)=qte : wsC.Cells(ligne,6)=ws.Cells(i,7)
+            If stk = 0 Then wsC.Rows(ligne).Interior.Color=RGB(255,199,206) Else wsC.Rows(ligne).Interior.Color=RGB(255,235,156)
+            ligne=ligne+1 : n=n+1
+        End If
+    Next i
+    wsC.Columns("A:F").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox IIf(n=0,"Tous les stocks sont OK.",n&" produit(s) à réapprovisionner → onglet 'À Commander'."), IIf(n=0,vbInformation,vbExclamation)
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez une colonne 'Stock cible' (col F) dans votre feuille Stock pour calculer automatiquement la quantité à commander jusqu'au niveau cible."},
+
+vnt4:{t:"Calculer les commissions par commercial",d:"Calcule les commissions selon un barème par palier de chiffre d'affaires.",c:`Sub CalculerCommissions()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,3)="Taux" : ws.Cells(1,4)="Commission (€)" : ws.Cells(1,5)="Palier"
+    ws.Range("C1:E1").Font.Bold = True
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,2)) Then
+            Dim ca As Double : ca = CDbl(ws.Cells(i,2).Value)
+            Dim tx As Double, pl As String
+            Select Case True
+                Case ca >= 200000 : tx=0.12 : pl="Or (> 200k€)"
+                Case ca >= 100000 : tx=0.09 : pl="Argent (100-200k€)"
+                Case ca >= 50000  : tx=0.07 : pl="Bronze (50-100k€)"
+                Case Else          : tx=0.05 : pl="Standard (< 50k€)"
+            End Select
+            ws.Cells(i,3).Value=tx : ws.Cells(i,3).NumberFormat="0%"
+            ws.Cells(i,4).Value=ca*tx : ws.Cells(i,4).NumberFormat="#,##0.00 €"
+            ws.Cells(i,5).Value=pl
+            If pl="Or (> 200k€)" Then ws.Rows(i).Interior.Color=RGB(255,235,156)
+        End If
+    Next i
+    ws.Columns("A:E").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Calcul des commissions terminé.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Externalisez le barème dans un onglet 'Paramètres' pour le modifier sans toucher au code VBA. Col A = Nom commercial, Col B = CA réalisé."},
+
+vnt5:{t:"Créer des fiches clients",d:"Génère une fiche individuelle dans un onglet dédié pour chaque client de la liste.",c:`Sub CreerFichesClients()
+    Dim wsl As Worksheet, wsF As Worksheet
+    Dim lastRow As Long, i As Long
+    Set wsl = ThisWorkbook.Sheets("Clients")
+    lastRow = wsl.Cells(Rows.Count,"A").End(xlUp).Row
+    If MsgBox("Créer "&lastRow-1&" fiches clients ?",vbYesNo+vbQuestion) = vbNo Then Exit Sub
+    Application.ScreenUpdating = False
+    For i = 2 To lastRow
+        Dim nm As String : nm = Trim(wsl.Cells(i,1).Value)
+        If nm = "" Then GoTo Suite
+        Dim ong As String : ong = Left(nm,28)
+        On Error Resume Next
+        Application.DisplayAlerts = False
+        ThisWorkbook.Sheets(ong).Delete
+        Application.DisplayAlerts = True
+        On Error GoTo 0
+        Set wsF = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        wsF.Name = ong
+        With wsF
+            .Range("A1:F1").Merge
+            .Range("A1").Value = "FICHE CLIENT — " & UCase(nm)
+            .Range("A1").Font.Size=14 : .Range("A1").Font.Bold=True
+            .Range("A1").Interior.Color=RGB(31,73,125)
+            .Range("A1").Font.Color=RGB(255,255,255)
+            .Range("A1").HorizontalAlignment=xlCenter : .Rows(1).RowHeight=30
+            .Cells(3,1)="Raison sociale" : .Cells(3,2)=wsl.Cells(i,1)
+            .Cells(4,1)="Contact"        : .Cells(4,2)=wsl.Cells(i,2)
+            .Cells(5,1)="Email"          : .Cells(5,2)=wsl.Cells(i,3)
+            .Cells(6,1)="Téléphone"      : .Cells(6,2)=wsl.Cells(i,4)
+            .Cells(7,1)="Secteur"        : .Cells(7,2)=wsl.Cells(i,5)
+            .Cells(8,1)="CA annuel"      : .Cells(8,2)=wsl.Cells(i,6)
+            .Cells(8,2).NumberFormat="#,##0 €"
+            .Cells(9,1)="Fiche créée le" : .Cells(9,2)=Date
+            .Range("A3:A9").Font.Bold=True
+            .Range("A3:A9").Interior.Color=RGB(242,242,242)
+            .Columns("A:B").AutoFit
+        End With
+        Suite:
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Fiches clients créées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Ajoutez des sections 'Historique' ou 'Notes commerciales' en étendant les lignes. Vous pouvez aussi dupliquer un onglet 'Modèle Fiche' plus élaboré."},
+
+ui1:{t:"Créer un bouton personnalisé",d:"Ajoute un bouton cliquable sur la feuille Excel associé à une macro, avec deux approches : bouton natif et forme stylisée.",c:`Sub AjouterBoutonForme()
+    Dim ws As Worksheet, forme As Shape
+    Set ws = ActiveSheet
+    On Error Resume Next : ws.Shapes("btnMacro").Delete : On Error GoTo 0
+    Set forme = ws.Shapes.AddShape(msoShapeRoundedRectangle, 10, 5, 170, 32)
+    With forme
+        .Name = "btnMacro"
+        .TextFrame.Characters.Text = "▶ Générer rapport"
+        .TextFrame.Characters.Font.Size = 11
+        .TextFrame.Characters.Font.Bold = True
+        .TextFrame.Characters.Font.Color = RGB(255,255,255)
+        .Fill.ForeColor.RGB = RGB(31,73,125)
+        .Line.Visible = msoFalse
+        .OnAction = "GenererRapportMensuel" ' ← Nom de votre macro
+    End With
+    MsgBox "Bouton créé. Cliquez dessus pour lancer la macro.", vbInformation
+End Sub
+
+Sub AjouterBoutonNatif()
+    ' Version bouton de formulaire (plus simple)
+    Dim ws As Worksheet, btn As Button
+    Set ws = ActiveSheet
+    Set btn = ws.Buttons.Add(Left:=ws.Range("H1").Left, Top:=0, Width:=140, Height:=28)
+    With btn
+        .Caption = "▶ Actualiser TCD"
+        .OnAction = "ActualiserTousTCD"
+        .Font.Size = 10 : .Font.Bold = True
+    End With
+End Sub`,tip:"<strong>Astuce :</strong> Préférez les formes (AddShape) aux boutons classiques pour plus de flexibilité de mise en forme. <code>.OnAction</code> doit contenir le nom exact de la macro."},
+
+ui2:{t:"Formulaire de saisie guidé (UserForm)",d:"Crée un formulaire de saisie structuré avec validation des champs et écriture directe dans la feuille de données.",c:`' ═══════════════════════════════════════════════════
+' ÉTAPE 1 : Alt+F11 → Insertion > UserForm
+' Ajoutez : 3 TextBox (txtDate, txtNom, txtMontant)
+'            1 ComboBox (cboType)
+'            2 CommandButton (btnValider, btnFermer)
+' Puis collez ce code dans le module du UserForm
+' ═══════════════════════════════════════════════════
+Private Sub UserForm_Initialize()
+    Me.Caption = "Saisie nouvelle transaction"
+    cboType.AddItem "Dépense"
+    cboType.AddItem "Recette"
+    cboType.AddItem "Virement"
+    cboType.Value = "Dépense"
+    txtDate.Value = Format(Date, "dd/mm/yyyy")
+End Sub
+
+Private Sub btnValider_Click()
+    If txtNom.Value = "" Then
+        MsgBox "Le champ 'Libellé' est obligatoire.", vbExclamation
+        txtNom.SetFocus : Exit Sub
+    End If
+    If Not IsNumeric(txtMontant.Value) Then
+        MsgBox "Montant numérique requis.", vbExclamation
+        txtMontant.SetFocus : Exit Sub
+    End If
+    Dim ws As Worksheet : Set ws = ThisWorkbook.Sheets("Données")
+    Dim lr As Long : lr = ws.Cells(Rows.Count,"A").End(xlUp).Row + 1
+    ws.Cells(lr,1).Value = CDate(txtDate.Value)
+    ws.Cells(lr,1).NumberFormat = "dd/mm/yyyy"
+    ws.Cells(lr,2).Value = txtNom.Value
+    ws.Cells(lr,3).Value = cboType.Value
+    ws.Cells(lr,4).Value = CDbl(txtMontant.Value)
+    ws.Cells(lr,4).NumberFormat = "#,##0.00 €"
+    MsgBox "Transaction enregistrée !", vbInformation
+    txtNom.Value = "" : txtMontant.Value = "" : txtNom.SetFocus
+End Sub
+
+Private Sub btnFermer_Click() : Unload Me : End Sub
+
+' ═══════════════════════════════════════════════════
+' ÉTAPE 2 : Dans un Module standard
+' ═══════════════════════════════════════════════════
+Sub OuvrirFormulaire()
+    FormulaireSaisie.Show ' ← Nom exact de votre UserForm
+End Sub`,tip:"<strong>Astuce :</strong> Dans l'éditeur VBA, les contrôles s'ajoutent via la Boîte à outils (Affichage → Boîte à outils). Double-cliquez sur le formulaire pour ouvrir son code."},
+
+ui3:{t:"Listes déroulantes dynamiques",d:"Crée des listes déroulantes en cascade : sélectionner une région filtre automatiquement les villes disponibles.",c:`Sub CreerListeDeroulante()
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    ws.Range("B2:B100").Validation.Delete
+    ' Liste simple
+    With ws.Range("B2:B100").Validation
+        .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
+             Formula1:="Île-de-France,Occitanie,Auvergne-Rhône-Alpes,PACA"
+        .ShowError = True
+        .ErrorTitle = "Valeur invalide"
+        .ErrorMessage = "Choisissez une région dans la liste."
+    End With
+    MsgBox "Liste déroulante créée en colonne B.", vbInformation
+End Sub
+
+Sub CreerListeEnCascade()
+    ' Prérequis : créer des plages nommées (Formules > Gestionnaire de noms)
+    '   "IleDeFrance" = liste villes IDF
+    '   "Occitanie"   = liste villes Occitanie  etc.
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    ws.Range("C2:C100").Validation.Delete
+    ' La liste de C dépend de la valeur en B (INDIRECT pointe vers la plage nommée)
+    With ws.Range("C2:C100").Validation
+        .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
+             Formula1:="=INDIRECT(SUBSTITUE(SUBSTITUE(B2,""-"",""""),"" "",""""))"
+        .ShowError = True
+        .ErrorMessage = "Sélectionnez d'abord une région en colonne B."
+    End With
+    MsgBox "Liste en cascade créée. Sélectionnez une région en B.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les plages nommées (Formules → Gestionnaire de noms) doivent avoir des noms sans espaces ni tirets. INDIRECT les pointe dynamiquement selon la sélection."},
+
+ui4:{t:"Raccourcis clavier pour macros",d:"Associe des touches de raccourci à vos macros les plus utilisées, activés automatiquement à l'ouverture du fichier.",c:`Sub DefinirRaccourcis()
+    Application.OnKey "^+r", "GenererRapportMensuel"  ' Ctrl+Shift+R
+    Application.OnKey "^+a", "ActualiserTousTCD"       ' Ctrl+Shift+A
+    Application.OnKey "^+e", "ExporterEnPDF"           ' Ctrl+Shift+E
+    Application.OnKey "^+n", "NettoyerDonnees"         ' Ctrl+Shift+N
+    MsgBox "Raccourcis activés :" & vbNewLine & _
+           "Ctrl+Shift+R → Rapport" & vbNewLine & _
+           "Ctrl+Shift+A → Actualiser TCD" & vbNewLine & _
+           "Ctrl+Shift+E → Export PDF" & vbNewLine & _
+           "Ctrl+Shift+N → Nettoyer données", vbInformation
+End Sub
+
+Sub SupprimerRaccourcis()
+    Application.OnKey "^+r" : Application.OnKey "^+a"
+    Application.OnKey "^+e" : Application.OnKey "^+n"
+    MsgBox "Raccourcis supprimés.", vbInformation
+End Sub
+
+' ═══════════════════════════════════════════════════
+' Pour activer automatiquement à l'ouverture :
+' Placez dans le module ThisWorkbook :
+' ═══════════════════════════════════════════════════
+Private Sub Workbook_Open()
+    Call DefinirRaccourcis
+End Sub`,tip:"<strong>Astuce :</strong> Les raccourcis avec <code>Application.OnKey</code> sont actifs tant qu'Excel est ouvert. Évitez les raccourcis natifs Excel (Ctrl+C, Ctrl+S, etc.)."},
+
+ui5:{t:"Messages d'alerte et de confirmation",d:"Exemples pratiques de boîtes de dialogue : confirmation, saisie utilisateur, barre de progression.",c:`Sub ExemplesDialogue()
+    ' ── 1. Confirmation Oui/Non ──
+    Dim rep As VbMsgBoxResult
+    rep = MsgBox("Écraser les données existantes ?", _
+                  vbYesNo + vbExclamation + vbDefaultButton2, "Confirmation")
+    If rep = vbNo Then MsgBox "Annulé.", vbInformation : Exit Sub
+    
+    ' ── 2. Saisie utilisateur ──
+    Dim periode As String
+    periode = InputBox("Période à traiter (ex: 2024-T3) :", "Saisie", _
+                        Format(Date,"YYYY") & "-T" & Int((Month(Date)-1)/3)+1)
+    If periode = "" Then MsgBox "Annulé.", vbInformation : Exit Sub
+    
+    ' ── 3. Barre de progression dans la barre de statut ──
+    Dim i As Integer
+    Application.ScreenUpdating = False
+    For i = 1 To 10
+        Application.StatusBar = "Traitement : " & i*10 & "%..."
+        ' ... votre traitement ici ...
+    Next i
+    Application.StatusBar = False ' Remettre la barre normale
+    Application.ScreenUpdating = True
+    
+    ' ── 4. Message de succès ──
+    MsgBox "Traitement de '" & periode & "' terminé !", _
+           vbInformation + vbOKOnly, "Terminé"
+End Sub`,tip:"<strong>Astuce :</strong> <code>Application.StatusBar</code> affiche la progression en bas à gauche d'Excel sans bloquer l'utilisateur. Remettez-la à <code>False</code> pour restaurer l'affichage normal."},
+
+mf1:{t:"Ouvrir, lire et fermer d'autres classeurs",d:"Ouvre un classeur externe, lit des données spécifiques, les copie dans le classeur courant puis ferme le fichier source.",c:`Sub LireDonneesExterne()
+    Dim wbS As Workbook, wsDest As Worksheet
+    Dim chemin As String, lastRow As Long, lastDest As Long
+    chemin = Application.GetOpenFilename( _
+        FileFilter:="Fichiers Excel (*.xlsx;*.xlsm;*.xls),*.xlsx;*.xlsm;*.xls", _
+        Title:="Sélectionner le fichier source")
+    If chemin = "False" Then Exit Sub
+    Application.ScreenUpdating = False
+    Set wsDest = ThisWorkbook.Sheets("Import")
+    Set wbS = Workbooks.Open(Filename:=chemin, ReadOnly:=True, UpdateLinks:=False)
+    lastRow = wbS.Sheets(1).Cells(Rows.Count,"A").End(xlUp).Row
+    wbS.Sheets(1).Range("A1:E" & lastRow).Copy
+    lastDest = wsDest.Cells(Rows.Count,"A").End(xlUp).Row + 1
+    wsDest.Range("A" & lastDest).PasteSpecial xlPasteValues
+    Application.CutCopyMode = False
+    wbS.Close SaveChanges:=False
+    Application.ScreenUpdating = True
+    MsgBox lastRow & " lignes importées depuis " & Dir(chemin), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>ReadOnly:=True</code> évite de bloquer le fichier source. <code>UpdateLinks:=False</code> supprime les avertissements de liaisons."},
+
+mf2:{t:"Consolider des rapports de plusieurs équipes",d:"Parcourt tous les fichiers Excel d'un dossier et consolide les données dans le classeur courant.",c:`Sub ConsoliderEquipes()
+    Dim dossier As String, fichier As String
+    Dim wbS As Workbook, wsDest As Worksheet
+    Dim lastDest As Long, n As Integer, totalL As Long
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des rapports d'équipes"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Set wsDest = ThisWorkbook.Sheets("Consolidation")
+    wsDest.Cells.Clear : lastDest = 1 : n = 0 : totalL = 0
+    fichier = Dir(dossier & "*.xlsx")
+    Do While fichier <> ""
+        Set wbS = Workbooks.Open(dossier & fichier, ReadOnly:=True, UpdateLinks:=False)
+        Dim lr As Long : lr = wbS.Sheets(1).Cells(Rows.Count,"A").End(xlUp).Row
+        If lr > 1 Then
+            If n = 0 Then wbS.Sheets(1).Rows(1).Copy wsDest.Rows(1) : lastDest = 2
+            wbS.Sheets(1).Range("A2:F" & lr).Copy
+            wsDest.Range("A" & lastDest).PasteSpecial xlPasteValues
+            ' Tracer la source en colonne G
+            Dim i As Long
+            For i = lastDest To lastDest + lr - 2
+                wsDest.Cells(i,7) = Left(fichier, Len(fichier)-5)
+            Next i
+            lastDest = wsDest.Cells(Rows.Count,"A").End(xlUp).Row + 1
+            totalL = totalL + lr - 1
+        End If
+        wbS.Close False : n = n+1 : fichier = Dir()
+    Loop
+    Application.CutCopyMode = False
+    wsDest.Columns("A:G").AutoFit
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox n & " fichier(s) — " & totalL & " lignes consolidées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> La colonne G trace l'équipe source de chaque ligne, ce qui permet de filtrer ou de ventiler les données par équipe dans un TCD."},
+
+mf3:{t:"Importer des fichiers CSV en masse",d:"Ouvre et importe tous les fichiers CSV d'un dossier en gérant le séparateur régional.",c:`Sub ImporterCSVMasse()
+    Dim dossier As String, fichier As String
+    Dim wbC As Workbook, wsDest As Worksheet
+    Dim lastDest As Long, n As Integer
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des fichiers CSV"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    Application.ScreenUpdating = False : Application.DisplayAlerts = False
+    Set wsDest = ThisWorkbook.Sheets.Add
+    wsDest.Name = "Import CSV " & Format(Date,"dd-mm")
+    lastDest = 1 : n = 0
+    fichier = Dir(dossier & "*.csv")
+    Do While fichier <> ""
+        Set wbC = Workbooks.Open(Filename:=dossier & fichier, Local:=True)
+        Dim lr As Long : lr = wbC.Sheets(1).UsedRange.Rows.Count
+        If lr > 1 Then
+            Dim sl As Long : sl = IIf(n=0,1,2)
+            wbC.Sheets(1).Rows(sl & ":" & lr).Copy
+            wsDest.Cells(lastDest,1).PasteSpecial xlPasteValues
+            lastDest = wsDest.Cells(Rows.Count,"A").End(xlUp).Row + 1
+        End If
+        wbC.Close False : n = n+1 : fichier = Dir()
+    Loop
+    Application.CutCopyMode = False
+    wsDest.Columns.AutoFit
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox n & " fichier(s) CSV importé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>Local:=True</code> gère automatiquement les CSV avec point-virgule (format français). Pour les CSV anglo-saxons, utilisez <code>Workbooks.OpenText</code>."},
+
+mf4:{t:"Renommer des fichiers depuis Excel",d:"Renomme des fichiers dans un dossier selon une table de correspondance définie dans une feuille Excel.",c:`Sub RenommerFichiers()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Dim dossier As String, anc As String, nvx As String
+    Dim nbOK As Integer, nbErr As Integer
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des fichiers à renommer"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    If MsgBox("Renommer "&lastRow-1&" fichier(s) ?",vbYesNo+vbQuestion)=vbNo Then Exit Sub
+    For i = 2 To lastRow
+        anc = Trim(ws.Cells(i,1).Value)
+        nvx = Trim(ws.Cells(i,2).Value)
+        If anc <> "" And nvx <> "" Then
+            If Dir(dossier & anc) <> "" Then
+                On Error Resume Next
+                Name dossier & anc As dossier & nvx
+                If Err.Number = 0 Then
+                    ws.Cells(i,3)="✓ Renommé" : ws.Cells(i,3).Font.Color=RGB(0,97,0) : nbOK=nbOK+1
+                Else
+                    ws.Cells(i,3)="Erreur: "&Err.Description : ws.Cells(i,3).Font.Color=RGB(156,0,6) : nbErr=nbErr+1 : Err.Clear
+                End If
+                On Error GoTo 0
+            Else
+                ws.Cells(i,3)="Fichier introuvable" : ws.Cells(i,3).Font.Color=RGB(156,87,0) : nbErr=nbErr+1
+            End If
+        End If
+    Next i
+    MsgBox nbOK&" renommé(s), "&nbErr&" erreur(s).", IIf(nbErr>0,vbExclamation,vbInformation)
+End Sub`,tip:"<strong>Astuce :</strong> Col A = ancien nom (avec extension), Col B = nouveau nom. Testez d'abord avec un <code>MsgBox anc & ' → ' & nvx</code> avant le <code>Name</code>."},
+
+mf5:{t:"Créer un fichier de synthèse automatique",d:"Crée un nouveau classeur de synthèse, y importe les données clés de plusieurs fichiers sources et l'enregistre.",c:`Sub CreerFichierSynthese()
+    Dim dossier As String, fichier As String
+    Dim wbS As Workbook, wbR As Workbook, wsR As Worksheet
+    Dim lastDest As Long, n As Integer
+    With Application.FileDialog(msoFileDialogFolderPicker)
+        .Title = "Dossier des fichiers sources"
+        If .Show <> -1 Then Exit Sub
+        dossier = .SelectedItems(1) & "\"
+    End With
+    Application.ScreenUpdating = False : Application.DisplayAlerts = False
+    Set wbR = Workbooks.Add
+    Set wsR = wbR.Sheets(1) : wsR.Name = "Synthèse"
+    wsR.Range("A1:G1").Value = Array("Source","Réf.","Désignation","Catégorie","Montant","Date","Note")
+    wsR.Range("A1:G1").Font.Bold = True
+    wsR.Range("A1:G1").Interior.Color = RGB(31,73,125)
+    wsR.Range("A1:G1").Font.Color = RGB(255,255,255)
+    lastDest = 2
+    fichier = Dir(dossier & "*.xlsx")
+    Do While fichier <> ""
+        Set wbS = Workbooks.Open(dossier & fichier, ReadOnly:=True, UpdateLinks:=False)
+        Dim lr As Long : lr = wbS.Sheets(1).Cells(Rows.Count,"A").End(xlUp).Row
+        If lr > 1 Then
+            Dim i As Long
+            For i = 2 To lr
+                wsR.Cells(lastDest,1) = Left(fichier,Len(fichier)-5)
+                Dim j As Integer
+                For j = 1 To 6
+                    wsR.Cells(lastDest,j+1) = wbS.Sheets(1).Cells(i,j).Value
+                Next j
+                lastDest = lastDest+1
+            Next i
+            n = n+1
+        End If
+        wbS.Close False : fichier = Dir()
+    Loop
+    Dim cheminS As String : cheminS = dossier & "SYNTHESE_" & Format(Date,"YYYY-MM-DD") & ".xlsx"
+    wsR.Columns.AutoFit
+    wbR.SaveAs Filename:=cheminS, FileFormat:=xlOpenXMLWorkbook
+    Application.DisplayAlerts = True : Application.ScreenUpdating = True
+    MsgBox n & " fichier(s) consolidés → " & Dir(cheminS), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Adaptez les indices de colonnes (1 à 6) à la structure de vos fichiers sources. Si tous ont la même structure, la copie peut se faire par plage entière."},
+
+mef1:{t:"Colorier selon des règles métier complexes",d:"Applique plusieurs règles de mise en forme combinées (statut + montant + priorité) impossibles avec les règles natives Excel.",c:`Sub MiseEnFormeMetier()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Range("A2:F" & lastRow).Interior.ColorIndex = xlNone
+    ws.Range("A2:F" & lastRow).Font.ColorIndex = xlAutomatic
+    ws.Range("A2:F" & lastRow).Font.Bold = False
+    ws.Range("A2:F" & lastRow).Font.Strikethrough = False
+    For i = 2 To lastRow
+        Dim st As String : st = LCase(Trim(ws.Cells(i,3).Value))
+        Dim mt As Double : If IsNumeric(ws.Cells(i,4)) Then mt = CDbl(ws.Cells(i,4))
+        Dim pr As String : pr = LCase(Trim(ws.Cells(i,5).Value))
+        If st = "annulé" Then
+            ws.Rows(i).Interior.Color=RGB(242,242,242)
+            ws.Rows(i).Font.Color=RGB(128,128,128)
+            ws.Rows(i).Font.Strikethrough=True
+        ElseIf pr = "haute" And mt > 10000 Then
+            ws.Rows(i).Interior.Color=RGB(255,199,206)
+            ws.Cells(i,4).Font.Color=RGB(156,0,6)
+            ws.Cells(i,4).Font.Bold=True
+        ElseIf st = "validé" Or st = "clôturé" Then
+            ws.Rows(i).Interior.Color=RGB(198,239,206)
+            ws.Rows(i).Font.Color=RGB(0,97,0)
+        ElseIf mt < 0 Then
+            ws.Cells(i,4).Interior.Color=RGB(255,235,156)
+            ws.Cells(i,4).Font.Color=RGB(156,87,0)
+            ws.Cells(i,4).Font.Bold=True
+        End If
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Mise en forme appliquée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> VBA permet de combiner plusieurs conditions et d'agir sur une ligne entière, ce que les règles natives Excel ne font pas facilement."},
+
+mef2:{t:"Surligner les lignes selon un statut",d:"Parcourt une liste et colorie chaque ligne selon la valeur de la colonne statut (colonne D).",c:`Sub SurlighnerStatuts()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Range("A2:G" & lastRow).Interior.ColorIndex = xlNone
+    ws.Range("A2:G" & lastRow).Font.Strikethrough = False
+    For i = 2 To lastRow
+        Dim st As String : st = LCase(Trim(ws.Cells(i,4).Value))
+        Select Case st
+            Case "en cours"
+                ws.Rows(i).Interior.Color=RGB(219,229,241)
+                ws.Cells(i,4).Font.Color=RGB(31,73,125)
+            Case "terminé","clôturé","validé"
+                ws.Rows(i).Interior.Color=RGB(198,239,206)
+                ws.Cells(i,4).Font.Color=RGB(0,97,0)
+            Case "en attente","bloqué"
+                ws.Rows(i).Interior.Color=RGB(255,235,156)
+                ws.Cells(i,4).Font.Color=RGB(156,87,0)
+            Case "annulé"
+                ws.Rows(i).Interior.Color=RGB(242,242,242)
+                ws.Rows(i).Font.Color=RGB(128,128,128)
+                ws.Rows(i).Font.Strikethrough=True
+            Case "urgent","critique"
+                ws.Rows(i).Interior.Color=RGB(255,199,206)
+                ws.Cells(i,4).Font.Color=RGB(156,0,6)
+                ws.Cells(i,4).Font.Bold=True
+        End Select
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Mise en couleur des statuts terminée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Le <code>LCase()</code> rend la comparaison insensible à la casse (Terminé = terminé = TERMINÉ). Ajoutez autant de <code>Case</code> que nécessaire."},
+
+mef3:{t:"Créer des indicateurs RAG",d:"Génère des indicateurs visuels feu de signalisation (Rouge/Orange/Vert) basés sur le % d'avancement et les dates d'échéance.",c:`Sub CreerIndicateursRAG()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,8)="Indicateur" : ws.Cells(1,8).Font.Bold=True
+    ws.Columns(8).ColumnWidth = 18
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,7)) Then
+            Dim av As Double : av = CDbl(ws.Cells(i,7).Value)
+            If av > 1 Then av = av/100
+            av = WorksheetFunction.Max(0,WorksheetFunction.Min(1,av))
+            Dim enR As Boolean : enR = False
+            If IsDate(ws.Cells(i,3)) Then
+                If CDate(ws.Cells(i,3).Value) < Date And av < 1 Then enR = True
+            End If
+            Dim ind As String, clr As Long
+            If enR Then
+                ind="🔴 ROUGE" : clr=RGB(255,199,206)
+            ElseIf av >= 0.8 Then
+                ind="🟢 VERT" : clr=RGB(198,239,206)
+            ElseIf av >= 0.5 Then
+                ind="🟡 ORANGE" : clr=RGB(255,235,156)
+            Else
+                ind="🔴 ROUGE" : clr=RGB(255,199,206)
+            End If
+            ws.Cells(i,8).Value=ind : ws.Cells(i,8).Interior.Color=clr
+            ws.Cells(i,8).HorizontalAlignment=xlCenter : ws.Cells(i,8).Font.Bold=True
+        End If
+    Next i
+    ws.Columns("A:H").AutoFit
+    Application.ScreenUpdating = True
+    MsgBox "Indicateurs RAG générés.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Les émojis 🔴🟡🟢 s'affichent nativement dans Excel depuis Office 2019. Pour les versions antérieures, utilisez des textes colorés ('ROUGE', 'ORANGE', 'VERT')."},
+
+mef4:{t:"Barres de progression dans les cellules",d:"Simule des barres de progression visuelles en utilisant des caractères Unicode et la police monospace.",c:`Sub CreerBarresProgression()
+    Dim ws As Worksheet, lastRow As Long, i As Long
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ws.Cells(1,6)="Progression" : ws.Cells(1,6).Font.Bold=True
+    ws.Columns(6).ColumnWidth=22
+    ws.Columns(6).Font.Name="Courier New"
+    For i = 2 To lastRow
+        If IsNumeric(ws.Cells(i,5)) Then
+            Dim pct As Double : pct = CDbl(ws.Cells(i,5).Value)
+            If pct > 1 Then pct = pct/100
+            pct = WorksheetFunction.Max(0,WorksheetFunction.Min(1,pct))
+            Dim nb As Integer : nb = 20
+            Dim nr As Integer : nr = Int(pct*nb)
+            Dim barre As String
+            barre = String(nr,Chr(9608)) & String(nb-nr,Chr(9617)) & " " & Format(pct,"0%")
+            ws.Cells(i,6).Value = barre
+            Select Case True
+                Case pct >= 1   : ws.Cells(i,6).Font.Color=RGB(0,97,0)
+                Case pct >= 0.7 : ws.Cells(i,6).Font.Color=RGB(0,112,192)
+                Case pct >= 0.4 : ws.Cells(i,6).Font.Color=RGB(156,87,0)
+                Case Else        : ws.Cells(i,6).Font.Color=RGB(156,0,6)
+            End Select
+        End If
+    Next i
+    Application.ScreenUpdating = True
+    MsgBox "Barres de progression générées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>Chr(9608)</code> = bloc plein █ et <code>Chr(9617)</code> = bloc clair ░. Ces caractères Unicode créent une barre efficace sans graphique ni plugin."},
+
+mef5:{t:"Formater selon une charte graphique",d:"Applique en une seule macro toute la mise en forme d'un rapport selon votre charte graphique.",c:`Sub AppliquerCharteGraphique()
+    Const C_PRINCIPAL As Long = 1955858   ' RGB(31,73,125) Bleu marine
+    Const C_ALTERNANCE As Long = 15921906 ' RGB(242,242,242) Gris clair
+    Dim ws As Worksheet, lastRow As Long, lastCol As Integer, i As Integer
+    Application.ScreenUpdating = False
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    lastCol = ws.Cells(1,Columns.Count).End(xlToLeft).Column
+    ' En-tête
+    With ws.Rows(1)
+        .Interior.Color=C_PRINCIPAL : .Font.Color=RGB(255,255,255)
+        .Font.Bold=True : .Font.Size=11 : .RowHeight=28
+        .HorizontalAlignment=xlCenter : .VerticalAlignment=xlCenter
+    End With
+    ' Alternance des lignes
+    For i = 2 To lastRow
+        ws.Rows(i).Interior.Color = IIf(i Mod 2=0, C_ALTERNANCE, xlNone)
+        ws.Rows(i).Font.Size=10 : ws.Rows(i).RowHeight=18
+    Next i
+    ' Bordures
+    With ws.Range(ws.Cells(1,1),ws.Cells(lastRow,lastCol))
+        .Borders(xlEdgeTop).LineStyle=xlContinuous
+        .Borders(xlEdgeBottom).LineStyle=xlContinuous
+        .Borders(xlEdgeLeft).LineStyle=xlContinuous
+        .Borders(xlEdgeRight).LineStyle=xlContinuous
+        .Borders(xlInsideHorizontal).LineStyle=xlContinuous
+        .Borders(xlInsideHorizontal).Weight=xlThin
+        .Borders(xlInsideHorizontal).Color=RGB(200,200,200)
+    End With
+    ws.Columns.AutoFit
+    ' Figer les volets
+    With ws.Parent.Windows(1) : .SplitRow=1 : .FreezePanes=True : End With
+    Application.ScreenUpdating = True
+    MsgBox "Charte graphique appliquée.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Convertissez vos couleurs RGB en Long avec <code>R + G*256 + B*65536</code>. Enregistrez cette macro dans votre classeur de macros personnelles pour l'utiliser dans tous vos fichiers."},
+
+off1:{t:"Générer un document Word depuis Excel",d:"Crée automatiquement un document Word avec un tableau de données injecté depuis Excel.",c:`Sub GenererWordDepuisExcel()
+    ' Nécessite : Outils > Références > Microsoft Word Object Library
+    Dim wdApp As Object, wdDoc As Object, ws As Worksheet
+    Dim chemin As String, lastRow As Long, lastCol As Integer
+    Set ws = ActiveSheet
+    chemin = ThisWorkbook.Path & "\Rapport_" & Format(Date,"YYYY-MM-DD") & ".docx"
+    Application.ScreenUpdating = False
+    Set wdApp = CreateObject("Word.Application")
+    wdApp.Visible = False
+    Set wdDoc = wdApp.Documents.Add
+    With wdDoc
+        ' Titre
+        Dim tp As Object : Set tp = .Content.Paragraphs.Add
+        tp.Range.Text = "Rapport — " & Format(Date,"MMMM YYYY")
+        tp.Range.Style = wdDoc.Styles("Titre 1")
+        tp.Range.InsertParagraphAfter
+        ' Introduction
+        Dim ip As Object : Set ip = .Content.Paragraphs.Add
+        ip.Range.Text = "Généré automatiquement le " & Format(Date,"dd/mm/yyyy") & " à " & Format(Time,"hh:mm")
+        ip.Range.InsertParagraphAfter
+        ' Tableau de données
+        lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+        lastCol = ws.Cells(1,Columns.Count).End(xlToLeft).Column
+        Dim tbl As Object
+        Set tbl = .Tables.Add(.Paragraphs.Last.Range, lastRow, lastCol)
+        Dim i As Long, j As Integer
+        For i = 1 To lastRow
+            For j = 1 To lastCol
+                tbl.Cell(i,j).Range.Text = CStr(ws.Cells(i,j).Value)
+                If i = 1 Then tbl.Cell(i,j).Range.Bold = True
+            Next j
+        Next i
+        .SaveAs2 Filename:=chemin, FileFormat:=12
+        .Close
+    End With
+    wdApp.Quit
+    Set wdDoc = Nothing : Set wdApp = Nothing
+    Application.ScreenUpdating = True
+    MsgBox "Document Word créé : " & Dir(chemin), vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour utiliser un modèle Word existant (.dotx), remplacez <code>wdApp.Documents.Add</code> par <code>wdApp.Documents.Add(Template:='chemin/modele.dotx')</code>."},
+
+off2:{t:"Alimenter un PowerPoint avec des graphiques",d:"Exporte des graphiques Excel dans une présentation PowerPoint, une diapositive par graphique.",c:`Sub ExporterVersPowerPoint()
+    ' Nécessite : Outils > Références > Microsoft PowerPoint Object Library
+    Dim pptApp As Object, pptPres As Object, pptSlide As Object
+    Dim ws As Worksheet, cht As ChartObject, chemin As String, n As Integer
+    Set ws = ActiveSheet
+    chemin = ThisWorkbook.Path & "\Presentation_" & Format(Date,"YYYY-MM-DD") & ".pptx"
+    Application.ScreenUpdating = False
+    Set pptApp = CreateObject("PowerPoint.Application")
+    pptApp.Visible = True
+    Set pptPres = pptApp.Presentations.Add
+    ' Diapo titre
+    Set pptSlide = pptPres.Slides.Add(1,1)
+    pptSlide.Shapes.Title.TextFrame.TextRange.Text = "Rapport — " & Format(Date,"MMMM YYYY")
+    n = 2
+    For Each cht In ws.ChartObjects
+        cht.CopyPicture Appearance:=xlScreen, Format:=xlPicture
+        Set pptSlide = pptPres.Slides.Add(n, 12)
+        On Error Resume Next
+        pptSlide.Shapes(1).TextFrame.TextRange.Text = cht.Chart.ChartTitle.Text
+        On Error GoTo 0
+        pptSlide.Shapes.Paste
+        With pptSlide.Shapes(pptSlide.Shapes.Count)
+            .Left=50 : .Top=100 : .Width=600 : .Height=380
+        End With
+        n = n+1
+    Next cht
+    pptPres.SaveAs chemin
+    Set pptSlide=Nothing : Set pptPres=Nothing : Set pptApp=Nothing
+    Application.ScreenUpdating = True
+    MsgBox n-2 & " graphique(s) exporté(s) dans la présentation.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour mettre à jour une présentation existante, remplacez <code>Presentations.Add</code> par <code>Presentations.Open(cheminFichierExistant)</code>."},
+
+off3:{t:"Créer des rendez-vous Outlook",d:"Lit une liste de rendez-vous dans Excel et les crée automatiquement dans le calendrier Outlook.",c:`Sub CreerRDVOutlook()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim OutApp As Object, rdv As Object, ws As Worksheet
+    Dim lastRow As Long, i As Long, n As Integer
+    ' Structure : A=Objet, B=Date, C=Heure début, D=Durée (min), E=Lieu, F=Description
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    Set OutApp = CreateObject("Outlook.Application")
+    For i = 2 To lastRow
+        If IsDate(ws.Cells(i,2)) And ws.Cells(i,1) <> "" Then
+            Set rdv = OutApp.CreateItem(1) ' olAppointmentItem
+            Dim db As Date : db = CDate(ws.Cells(i,2).Value)
+            Dim hd As Date : hd = IIf(IsDate(ws.Cells(i,3)),CDate(ws.Cells(i,3)),TimeValue("09:00:00"))
+            Dim dr As Integer : dr = IIf(IsNumeric(ws.Cells(i,4)),CInt(ws.Cells(i,4)),60)
+            With rdv
+                .Subject = ws.Cells(i,1).Value
+                .Start = CDate(Format(db,"yyyy-mm-dd")&" "&Format(hd,"hh:mm"))
+                .Duration = dr
+                .Location = ws.Cells(i,5).Value
+                .Body = ws.Cells(i,6).Value
+                .ReminderMinutesBeforeStart = 15
+                .BusyStatus = 2 ' olBusy
+                .Save
+            End With
+            ws.Cells(i,7)="✓ Créé" : ws.Cells(i,7).Font.Color=RGB(0,97,0)
+            n = n+1 : Set rdv = Nothing
+        End If
+    Next i
+    Set OutApp = Nothing
+    MsgBox n & " rendez-vous créé(s) dans Outlook.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Pour créer des réunions avec participants, ajoutez <code>.Recipients.Add('email@domaine.fr')</code> et changez <code>.BusyStatus = 1</code> (olMeeting)."},
+
+off4:{t:"Publipostage e-mails avec pièces jointes",d:"Envoie des e-mails personnalisés depuis Outlook, chacun avec une pièce jointe spécifique au destinataire.",c:`Sub PublipostageAvecPJ()
+    ' Nécessite : Outils > Références > Microsoft Outlook Object Library
+    Dim OutApp As Object, OutMail As Object, ws As Worksheet
+    Dim lastRow As Long, i As Long, n As Integer
+    Set ws = ActiveSheet
+    lastRow = ws.Cells(Rows.Count,"A").End(xlUp).Row
+    ' Structure : A=Prénom, B=Email, C=Objet, D=Chemin pièce jointe
+    If MsgBox("Envoyer "&lastRow-1&" e-mails avec PJ ?",vbYesNo+vbQuestion) = vbNo Then Exit Sub
+    Set OutApp = CreateObject("Outlook.Application")
+    For i = 2 To lastRow
+        Dim email As String : email = Trim(ws.Cells(i,2).Value)
+        Dim prenom As String : prenom = Trim(ws.Cells(i,1).Value)
+        Dim pj As String : pj = Trim(ws.Cells(i,4).Value)
+        If email <> "" Then
+            Set OutMail = OutApp.CreateItem(0)
+            With OutMail
+                .To = email
+                .Subject = ws.Cells(i,3).Value
+                .HTMLBody = "<p>Bonjour "&prenom&",</p>" & _
+                    "<p>Veuillez trouver ci-joint votre document.</p>" & _
+                    "<p>Cordialement</p>"
+                If pj <> "" And Dir(pj) <> "" Then .Attachments.Add pj
+                .Send ' Remplacer par .Display pour vérification
+            End With
+            ws.Cells(i,5)="✓ "&Format(Now,"hh:mm") : ws.Cells(i,5).Font.Color=RGB(0,97,0)
+            n = n+1 : Set OutMail = Nothing
+        End If
+    Next i
+    Set OutApp = Nothing
+    MsgBox n & " e-mail(s) envoyé(s).", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> Testez toujours avec <code>.Display</code> avant le premier envoi réel. Vous pouvez ajouter plusieurs PJ avec plusieurs lignes <code>.Attachments.Add</code>."},
+
+off5:{t:"Poster un message dans Teams",d:"Envoie une notification dans un canal Teams via un webhook entrant lorsqu'un seuil est atteint dans Excel.",c:`Sub NotifierTeams()
+    ' ═══════════════════════════════════════════════════
+    ' PRÉREQUIS : Créer un Webhook entrant dans Teams
+    '   Canal Teams > ... > Connecteurs > Webhook entrant
+    '   Copier l'URL dans la variable urlWebhook ci-dessous
+    ' ═══════════════════════════════════════════════════
+    Dim ws As Worksheet : Set ws = ActiveSheet
+    Dim valeur As Double : valeur = CDbl(ws.Range("B2").Value)
+    Dim seuil As Double : seuil = CDbl(ws.Range("B3").Value)
+    If valeur <= seuil Then
+        MsgBox "Seuil non atteint. Aucune notification.", vbInformation : Exit Sub
+    End If
+    Dim urlWebhook As String
+    urlWebhook = "https://outlook.office.com/webhook/VOTRE-URL-ICI"
+    Dim msg As String
+    msg = "{""@type"":""MessageCard""," & _
+           """@context"":""http://schema.org/extensions""," & _
+           """themeColor"":""FF0000""," & _
+           """summary"":""Alerte Excel""," & _
+           """sections"":[{" & _
+           """activityTitle"":""⚠️ Alerte depuis Excel""," & _
+           """activitySubtitle"":""" & ws.Name & " — " & Format(Now,"dd/mm/yyyy hh:mm") & """," & _
+           """facts"":[" & _
+           "{""name"":""Valeur"",""value"":""" & valeur & """}," & _
+           "{""name"":""Seuil"",""value"":""" & seuil & """}," & _
+           "{""name"":""Fichier"",""value"":""" & ThisWorkbook.Name & """}" & _
+           "]}]}"
+    Dim http As Object
+    Set http = CreateObject("MSXML2.XMLHTTP")
+    http.Open "POST", urlWebhook, False
+    http.setRequestHeader "Content-Type", "application/json"
+    http.Send msg
+    If http.Status = 200 Then
+        ws.Range("B5") = "Alerte Teams : " & Format(Now,"dd/mm hh:mm")
+        MsgBox "Notification envoyée dans Teams !", vbInformation
+    Else
+        MsgBox "Erreur " & http.Status & ". Vérifiez l'URL du webhook.", vbExclamation
+    End If
+    Set http = Nothing
+End Sub`,tip:"<strong>Astuce :</strong> Dans Teams : Canal → '...' → Connecteurs → 'Webhook entrant' → Configurer → copiez l'URL. Chaque alerte postée apparaît comme un message dans le canal."},
+
+sec1:{t:"Protéger les feuilles par mot de passe",d:"Protège ou déprotège automatiquement toutes les feuilles du classeur avec un mot de passe centralisé.",c:`Sub GererProtection()
+    Dim ws As Worksheet, mdp As String, action As Integer
+    Dim nbOK As Integer, nbErr As Integer
+    action = MsgBox("OUI = PROTÉGER toutes les feuilles" & vbNewLine & "NON = DÉPROTÉGER", _
+                     vbYesNoCancel+vbQuestion, "Protection des feuilles")
+    If action = vbCancel Then Exit Sub
+    mdp = InputBox("Mot de passe :", "Sécurité")
+    If mdp = "" Then MsgBox "Annulé (mot de passe vide).", vbInformation : Exit Sub
+    Application.ScreenUpdating = False
+    For Each ws In ThisWorkbook.Worksheets
+        On Error Resume Next
+        If action = vbYes Then
+            ws.Protect Password:=mdp, AllowSorting:=True, AllowFiltering:=True, _
+                Contents:=True, DrawingObjects:=True, _
+                AllowInsertingRows:=False, AllowDeletingRows:=False, _
+                AllowFormattingCells:=False
+        Else
+            ws.Unprotect Password:=mdp
+        End If
+        If Err.Number = 0 Then nbOK=nbOK+1 Else nbErr=nbErr+1 : Err.Clear
+        On Error GoTo 0
+    Next ws
+    Application.ScreenUpdating = True
+    MsgBox nbOK & " feuille(s) " & IIf(action=vbYes,"protégée(s)","déprotégée(s)") & "." & _
+           IIf(nbErr>0,vbNewLine&nbErr&" erreur(s).",""), IIf(nbErr>0,vbExclamation,vbInformation)
+End Sub`,tip:"<strong>Astuce :</strong> Ne stockez jamais le mot de passe en dur dans le code d'un fichier partagé. Utilisez InputBox (comme ici) pour le saisir à la volée."},
+
+sec2:{t:"Masquer des onglets selon le profil",d:"Affiche ou masque des onglets selon l'identifiant Windows de l'utilisateur connecté.",c:`Sub GererAccesOnglets()
+    Dim ws As Worksheet
+    Dim utilisateur As String : utilisateur = LCase(Environ("USERNAME"))
+    Application.ScreenUpdating = False
+    For Each ws In ThisWorkbook.Worksheets
+        Select Case ws.Name
+            Case "Tableau de bord"
+                ws.Visible = xlSheetVisible ' Toujours visible
+            Case "Salaires","Données RH","Évaluation"
+                ' Visible uniquement pour les RH
+                If utilisateur = "jdupont" Or InStr(utilisateur,"rh_")>0 Then
+                    ws.Visible = xlSheetVisible
+                Else
+                    ws.Visible = xlSheetVeryHidden ' Inaccessible sans VBA
+                End If
+            Case "Budget","Comptabilité","Trésorerie"
+                ' Visible pour la direction et compta
+                If utilisateur = "pdirecteur" Or InStr(utilisateur,"compta")>0 Then
+                    ws.Visible = xlSheetVisible
+                Else
+                    ws.Visible = xlSheetVeryHidden
+                End If
+            Case Else
+                ws.Visible = xlSheetVisible
+        End Select
+    Next ws
+    Application.ScreenUpdating = True
+End Sub`,tip:"<strong>Astuce :</strong> <code>xlSheetVeryHidden</code> ne peut pas être affiché via le menu Excel. Seul le code VBA peut le rendre visible. C'est différent de <code>xlSheetHidden</code>."},
+
+sec3:{t:"Journaliser les modifications",d:"Enregistre automatiquement chaque modification de cellule avec horodatage et identité de l'utilisateur.",c:`' ═══════════════════════════════════════════════════
+' Placez ce code dans le module ThisWorkbook
+' (Double-clic sur ThisWorkbook dans l'explorateur VBA)
+' ═══════════════════════════════════════════════════
+Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range)
+    If Sh.Name = "Journal" Then Exit Sub
+    If Target.Cells.Count > 10 Then Exit Sub
+    Application.EnableEvents = False
+    On Error GoTo Fin
+    Dim wsJ As Worksheet
+    On Error Resume Next
+    Set wsJ = ThisWorkbook.Sheets("Journal")
+    On Error GoTo 0
+    If wsJ Is Nothing Then
+        Set wsJ = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.Count))
+        wsJ.Name = "Journal"
+        wsJ.Range("A1:F1").Value = Array("Date/Heure","Utilisateur","Feuille","Cellule","Type","Nouvelle valeur")
+        wsJ.Range("A1:F1").Font.Bold = True
+        wsJ.Range("A1:F1").Interior.Color = RGB(31,73,125)
+        wsJ.Range("A1:F1").Font.Color = RGB(255,255,255)
+    End If
+    Dim lr As Long : lr = wsJ.Cells(Rows.Count,"A").End(xlUp).Row + 1
+    Dim cell As Range
+    For Each cell In Target
+        wsJ.Cells(lr,1).Value = Now : wsJ.Cells(lr,1).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        wsJ.Cells(lr,2).Value = Environ("USERNAME")
+        wsJ.Cells(lr,3).Value = Sh.Name
+        wsJ.Cells(lr,4).Value = cell.Address
+        wsJ.Cells(lr,5).Value = "Modification"
+        wsJ.Cells(lr,6).Value = cell.Value
+        lr = lr+1
+    Next cell
+Fin:
+    Application.EnableEvents = True
+End Sub`,tip:"<strong>Astuce :</strong> Ce code se déclenche automatiquement à chaque modification. Pour capturer l'ancienne valeur, utilisez l'événement <code>SelectionChange</code> pour la mémoriser avant la modification."},
+
+sec4:{t:"Verrouiller les cellules de formule",d:"Protège automatiquement toutes les cellules contenant des formules pour éviter leur suppression accidentelle.",c:`Sub VerrouillerFormules()
+    Dim ws As Worksheet, plage As Range, n As Integer, mdp As String
+    Set ws = ActiveSheet
+    If MsgBox("Verrouiller les cellules avec formules sur '"&ws.Name&"' ?",vbYesNo+vbQuestion) = vbNo Then Exit Sub
+    Application.ScreenUpdating = False
+    ws.Cells.Locked = False ' Déverrouiller tout d'abord
+    On Error Resume Next
+    Set plage = ws.Cells.SpecialCells(xlCellTypeFormulas)
+    On Error GoTo 0
+    If plage Is Nothing Then
+        MsgBox "Aucune formule trouvée.", vbInformation
+        Application.ScreenUpdating = True : Exit Sub
+    End If
+    plage.Locked = True
+    plage.FormulaHidden = True ' Masque la formule dans la barre de formule
+    n = plage.Cells.Count
+    mdp = InputBox("Mot de passe pour protéger les formules :", "Protection")
+    ws.Protect Password:=mdp, _
+                AllowFormattingCells:=True, AllowFormattingColumns:=True, _
+                AllowInsertingRows:=True, AllowDeletingRows:=False, _
+                AllowSorting:=True, AllowFiltering:=True
+    Application.ScreenUpdating = True
+    MsgBox n & " cellule(s) avec formules verrouillées.", vbInformation
+End Sub`,tip:"<strong>Astuce :</strong> <code>FormulaHidden = True</code> masque la formule dans la barre de formule (fonctionne uniquement avec la feuille protégée). Les utilisateurs voient la valeur mais pas la formule."},
+
+sec5:{t:"Sauvegarde horodatée automatique",d:"Crée automatiquement une copie de sauvegarde du classeur à chaque ouverture, avec horodatage dans le nom.",c:`' ═══════════════════════════════════════════════════
+' ÉTAPE 1 : Placez dans le module ThisWorkbook
+' ═══════════════════════════════════════════════════
+Private Sub Workbook_Open()
+    Call CreerSauvegardeHorodatee
+End Sub
+
+' ═══════════════════════════════════════════════════
+' ÉTAPE 2 : Placez dans un Module standard
+' ═══════════════════════════════════════════════════
+Sub CreerSauvegardeHorodatee()
+    Dim dossier As String, nomFichier As String, chemin As String
+    Const MAX_SAUVEGARDES As Integer = 10
+    dossier = ThisWorkbook.Path & "\Sauvegardes\"
+    If Dir(dossier, vbDirectory) = "" Then MkDir dossier
+    Dim nomBase As String : nomBase = Left(ThisWorkbook.Name, Len(ThisWorkbook.Name)-5)
+    nomFichier = nomBase & "_" & Format(Now,"YYYY-MM-DD_HH-MM") & ".xlsm"
+    chemin = dossier & nomFichier
+    On Error GoTo ErrSauvegarde
+    ThisWorkbook.SaveCopyAs Filename:=chemin
+    ' Purger les anciennes sauvegardes
+    Dim fichiers() As String, nb As Integer, f As String
+    f = Dir(dossier & nomBase & "*.xlsm")
+    Do While f <> "" : nb=nb+1 : ReDim Preserve fichiers(nb-1) : fichiers(nb-1)=f : f=Dir() : Loop
+    If nb > MAX_SAUVEGARDES Then
+        Dim i As Integer
+        For i = 0 To nb-MAX_SAUVEGARDES-1 : Kill dossier & fichiers(i) : Next i
+    End If
+    Exit Sub
+ErrSauvegarde:
+    MsgBox "Sauvegarde automatique impossible : " & dossier, vbExclamation
+End Sub`,tip:"<strong>Astuce :</strong> <code>SaveCopyAs</code> enregistre une copie sans modifier le fichier en cours. Les 10 dernières sauvegardes sont conservées automatiquement, les plus anciennes sont supprimées."}
+};
+
+function openModal(id){
+  const d=M[id];
+  if(!d)return;
+  document.getElementById('modalTitle').textContent=d.t;
+  document.getElementById('modalDesc').textContent=d.d;
+  document.getElementById('modalCode').textContent=d.c;
+  document.getElementById('modalTip').innerHTML=d.tip;
+  document.getElementById('copyBtn').textContent='Copier';
+  document.getElementById('copyBtn').className='copy-btn';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open');document.body.style.overflow='';}
+function closeOut(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
+function copyCode(){
+  navigator.clipboard.writeText(document.getElementById('modalCode').textContent).then(()=>{
+    const b=document.getElementById('copyBtn');
+    b.textContent='✓ Copié !';b.className='copy-btn copied';
+    setTimeout(()=>{b.textContent='Copier';b.className='copy-btn';},2000);
+  });
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+</script>
+</body>
+</html>
